@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - F&F Coffee Hub</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#FF6B6B",
+                        secondary: "#e4a672",
+                        dark: "#292F36",
+                        light: "#FFF9EA", 
+                        accent: "#c06c54",
+                        gold: "#DEB887"
+                    },
+                    fontFamily: {
+                        sans: ["Montserrat", "sans-serif"],
+                        display: ["Cormorant Garamond", "serif"]
+                    }
+                }
+            }
+        };
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        .header-bg {
+            background-color: rgba(255, 249, 234, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .header-scrolled {
+            background-color: rgba(255, 249, 234, 0.95);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-link {
+            font-size: 15px;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body class="font-sans bg-light">
+    <!-- Navbar -->
+    <nav class="header-bg fixed top-0 left-0 w-full z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <img src="photos/F&F.svg" alt="F&F Coffee Hub Logo" class="h-12 mr-3">
+                        <span class="text-xl font-medium text-dark">Froth & Flavours Coffee Hub</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html#home" class="nav-link text-dark hover:text-primary transition-colors duration-300">Home</a>
+                    <a href="index.html#about" class="nav-link text-dark hover:text-primary transition-colors duration-300">About Us</a>
+                    <a href="index.html#menu" class="nav-link text-dark hover:text-primary transition-colors duration-300">Menu</a>
+
+                    <!-- Cart Icon -->
+                    <a href="cart.html" class="text-primary hover:text-primary/80 transition-colors duration-300 relative">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span id="cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+
+                    <!-- Contact Us Button -->
+                    <a href="index.html#contact" class="bg-accent hover:bg-accent/90 text-white px-6 py-2 rounded-full transition-colors duration-300 text-sm font-medium">
+                        Contact Us
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-dark focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden hidden pb-4">
+                <a href="index.html#home" class="block py-2 text-dark hover:text-primary nav-link">Home</a>
+                <a href="index.html#about" class="block py-2 text-dark hover:text-primary nav-link">About Us</a>
+                <a href="index.html#menu" class="block py-2 text-dark hover:text-primary nav-link">Menu</a>
+
+                <div class="flex items-center justify-between mt-4">
+                    <a href="cart.html" class="text-primary hover:text-primary/80 relative">
+                        <i class="fas fa-shopping-cart text-lg"></i>
+                        <span id="mobile-cart-count" class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    <a href="index.html#contact" class="bg-accent hover:bg-accent/90 text-white px-5 py-2 rounded-full text-sm font-medium">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Section -->
+    <section class="pt-32 pb-16 px-4">
+        <div class="container mx-auto">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="text-3xl font-display font-bold text-dark mb-4">Your Shopping Cart</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Review your items and proceed to checkout</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8" data-aos="fade-up">
+                <div id="cart-items" class="divide-y divide-gray-200">
+                    <!-- Cart items will be displayed here -->
+                    <div id="empty-cart-message" class="py-8 text-center">
+                        <i class="fas fa-shopping-cart text-4xl text-gray-300 mb-4"></i>
+                        <p class="text-gray-500">Your cart is empty</p>
+                        <a href="index.html#menu" class="inline-block mt-4 bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-md font-medium transition-colors duration-300">
+                            Browse Menu
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div id="order-summary" class="bg-white rounded-lg shadow-md p-6 mb-8 hidden" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="text-xl font-semibold text-dark mb-4">Order Summary</h3>
+                <div class="space-y-2 mb-4">
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Subtotal</span>
+                        <span id="subtotal" class="font-medium">Rs. 0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Delivery Fee</span>
+                        <span class="font-medium">Rs. 50</span>
+                    </div>
+                    <div class="border-t border-gray-200 pt-2 mt-2">
+                        <div class="flex justify-between font-semibold">
+                            <span>Total</span>
+                            <span id="total" class="text-primary">Rs. 50</span>
+                        </div>
+                    </div>
+                </div>
+                <button id="checkout-btn" class="w-full bg-accent hover:bg-accent/90 text-white py-3 rounded-md font-medium transition-colors duration-300">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- Logo and About -->
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="photos/F&F.svg" alt="F&F Coffee Hub Logo" class="h-10 mr-3 bg-white p-1 rounded">
+                        <span class="text-xl font-semibold">F&F Coffee Hub</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Serving delicious food and beverages 24/7. Your go-to place for quality dining in Pokhara.
+                    </p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html#home" class="text-gray-400 hover:text-white transition-colors duration-300">Home</a></li>
+                        <li><a href="index.html#about" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+                        <li><a href="index.html#menu" class="text-gray-400 hover:text-white transition-colors duration-300">Menu</a></li>
+                        <li><a href="index.html#contact" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                            <span class="text-gray-400">Lakeside-6, Pokhara, Nepal</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt mt-1 mr-2"></i>
+                            <span class="text-gray-400">+977 9843235566</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-2"></i>
+                            <span class="text-gray-400">info@ffcoffeehub.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Opening Hours -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Opening Hours</h4>
+                    <ul class="space-y-2">
+                        <li class="text-gray-400">Monday - Sunday</li>
+                        <li class="text-gray-400">Open 24 Hours</li>
+                    </ul>
+                    
+                    <div class="mt-6">
+                        <h5 class="font-semibold mb-3">Follow Us</h5>
+                        <div class="flex space-x-4">
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="text-gray-400 hover:text-white transition-colors duration-300">
+                                <i class="fab fa-tiktok"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-6 text-center">
+                <p class="text-gray-400">© 2023 F&F Coffee Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- JavaScript for Cart Functionality -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartDisplay();
+        });
+
+        function updateCartDisplay() {
+            const cartItems = getCartItems();
+            const cartItemsContainer = document.getElementById('cart-items');
+            const emptyCartMessage = document.getElementById('empty-cart-message');
+            const orderSummary = document.getElementById('order-summary');
+            const cartCount = document.getElementById('cart-count');
+            const mobileCartCount = document.getElementById('mobile-cart-count');
+            
+            // Update cart count
+            const totalItems = Object.values(cartItems).reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            mobileCartCount.textContent = totalItems;
+            
+            // If cart is empty, show empty message and hide order summary
+            if (totalItems === 0) {
+                emptyCartMessage.classList.remove('hidden');
+                orderSummary.classList.add('hidden');
+                return;
+            }
+            
+            // Otherwise, hide empty message and show order summary
+            emptyCartMessage.classList.add('hidden');
+            orderSummary.classList.remove('hidden');
+            
+            // Clear existing cart items
+            cartItemsContainer.innerHTML = '';
+            
+            // Calculate subtotal
+            let subtotal = 0;
+            
+            // Add each item to the cart display
+            Object.values(cartItems).forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const itemElement = document.createElement('div');
+                itemElement.className = 'py-4 flex justify-between items-center';
+                itemElement.innerHTML = `
+                    <div class="flex items-center">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded mr-4">
+                        <div>
+                            <h4 class="font-semibold">${item.name}</h4>
+                            <p class="text-gray-600">Rs. ${item.price}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="flex items-center mr-4">
+                            <button class="decrease-quantity bg-gray-200 px-2 py-1 rounded-l" data-id="${item.id}">-</button>
+                            <span class="px-3 py-1 bg-gray-100">${item.quantity}</span>
+                            <button class="increase-quantity bg-gray-200 px-2 py-1 rounded-r" data-id="${item.id}">+</button>
+                        </div>
+                        <span class="font-medium mr-4">Rs. ${itemTotal}</span>
+                        <button class="remove-item text-red-500 hover:text-red-700" data-id="${item.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                cartItemsContainer.appendChild(itemElement);
+            });
+            
+            // Add event listeners for quantity buttons and remove buttons
+            document.querySelectorAll('.decrease-quantity').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    decreaseQuantity(id);
+                    updateCartDisplay();
+                });
+            });
+            
+            document.querySelectorAll('.increase-quantity').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    increaseQuantity(id);
+                    updateCartDisplay();
+                });
+            });
+            
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = this.getAttribute('data-id');
+                    removeFromCart(id);
+                    updateCartDisplay();
+                });
+            });
+            
+            // Update subtotal and total
+            document.getElementById('subtotal').textContent = `Rs. ${subtotal}`;
+            document.getElementById('total').textContent = `Rs. ${subtotal + 50}`; // Adding delivery fee
+        }
+
+        function getCartItems() {
+            const cartItems = localStorage.getItem('cartItems');
+            return cartItems ? JSON.parse(cartItems) : {};
+        }
+
+        function increaseQuantity(id) {
+            const cartItems = getCartItems();
+            if (cartItems[id]) {
+                cartItems[id].quantity += 1;
+                localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            }
+        }
+
+        function decreaseQuantity(id) {
+            const cartItems = getCartItems();
+            if (cartItems[id]) {
+                cartItems[id].quantity -= 1;
+                if (cartItems[id].quantity <= 0) {
+                    removeFromCart(id);
+                } else {
+                    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+                }
+            }
+        }
+
+        function removeFromCart(id) {
+            const cartItems = getCartItems();
+            if (cartItems[id]) {
+                delete cartItems[id];
+                localStorage.setItem('cartItems', JSON.stringify(cartItems));
+            }
+        }
+
+        // Checkout button functionality
+        document.getElementById('checkout-btn').addEventListener('click', function() {
+            alert('Thank you for your order! This would proceed to payment in a real application.');
+            // Clear cart after checkout
+            localStorage.removeItem('cartItems');
+            updateCartDisplay();
+        });
+    </script>
+</body>
+</html>
