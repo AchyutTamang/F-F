@@ -84,9 +84,18 @@
         }
         /* Updated header styles */
         .header-bg {
-            background-color: #FFF9EA;
+            background-color: rgba(255, 249, 234, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
         }
+        
+        .header-scrolled {
+            background-color: rgba(255, 249, 234, 0.95);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
         .nav-link {
             font-size: 15px;
             font-weight: 500;
@@ -189,17 +198,18 @@
                 </div>
                 
                 <!-- Right Content - Food Images -->
-                <div class="w-full md:w-1/2 flex justify-center" data-aos="fade-left">
+                <!-- <div class="w-full md:w-1/2 flex justify-center" data-aos="fade-left">
                     <div class="relative">
                         <!-- Main food image -->
-                        <div class="hero-image overflow-hidden w-72 h-72 md:w-80 md:h-80 bg-cover bg-center shadow-lg" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
+                        <!-- <div class="hero-image overflow-hidden w-72 h-72 md:w-80 md:h-80 bg-cover bg-center shadow-lg" style="background-image: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
                         </div>
                         
-                        <!-- Second food image -->
-                        <div class="hero-image overflow-hidden w-56 h-56 md:w-64 md:h-64 bg-cover bg-center absolute -bottom-10 -right-10 md:-right-16 shadow-lg" style="background-image: url('https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
+                         Second food image -->
+                        <!-- <div class="hero-image overflow-hidden w-56 h-56 md:w-64 md:h-64 bg-cover bg-center absolute -bottom-10 -right-10 md:-right-16 shadow-lg" style="background-image: url('https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
                         </div>
                     </div>
-                </div>
+                </div> --> 
+                 
             </div>
         </div>
     </section>
@@ -239,14 +249,14 @@
     <!-- Menu Section -->
     <section id="menu" class="py-16 px-4">
         <div class="container mx-auto">
-            <div class="text-center mb-12">
+            <div class="text-center mb-12" data-aos="fade-up">
                 <h2 class="text-3xl font-display font-bold text-dark mb-4">Discover Our Menu</h2>
                 <p class="text-gray-600 max-w-2xl mx-auto">Explore our wide selection of delicious beverages and food items</p>
             </div>
             
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                 <!-- Beverages Column -->
-                <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="bg-white rounded-lg shadow-md p-6" data-aos="fade-up" data-aos-delay="100">
                     <h3 class="text-xl font-semibold text-primary mb-4">Beverages</h3>
                     <ul class="space-y-2">
                         <li><a href="#" class="text-dark hover:text-primary">Refreshner</a></li>
@@ -262,7 +272,7 @@
                 </div>
                 
                 <!-- Food Column -->
-                <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="bg-white rounded-lg shadow-md p-6" data-aos="fade-up" data-aos-delay="200">
                     <h3 class="text-xl font-semibold text-primary mb-4">Food</h3>
                     <ul class="space-y-2">
                         <li><a href="#" class="text-dark hover:text-primary">Pizza</a></li>
@@ -279,7 +289,7 @@
                 </div>
                 
                 <!-- Specials Column -->
-                <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="bg-white rounded-lg shadow-md p-6" data-aos="fade-up" data-aos-delay="300">
                     <h3 class="text-xl font-semibold text-primary mb-4">Specials & More</h3>
                     <ul class="space-y-2">
                         <li><a href="#" class="text-dark hover:text-primary">Veg-Starter</a></li>
@@ -300,11 +310,11 @@
             </div>
             
             <!-- Featured Items -->
-            <h3 class="text-2xl font-display font-bold text-dark text-center mb-8">Discover Our Items</h3>
+            <h3 class="text-2xl font-display font-bold text-dark text-center mb-8" data-aos="fade-up">Discover Our Items</h3>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
                 <!-- Item 1 -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden" data-aos="fade-up" data-aos-delay="100">
                     <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1257&q=80" alt="Lemonade" class="w-full h-48 object-cover">
                     <div class="p-4">
                         <div class="flex justify-between items-center mb-2">
@@ -319,7 +329,7 @@
                 </div>
                 
                 <!-- Item 2 -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden" data-aos="fade-up" data-aos-delay="200">
                     <img src="https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" alt="Coffee" class="w-full h-48 object-cover">
                     <div class="p-4">
                         <div class="flex justify-between items-center mb-2">
@@ -334,7 +344,7 @@
                 </div>
                 
                 <!-- Item 3 -->
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden" data-aos="fade-up" data-aos-delay="300">
                     <img src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=722&q=80" alt="Burger" class="w-full h-48 object-cover">
                     <div class="p-4">
                         <div class="flex justify-between items-center mb-2">
@@ -360,7 +370,7 @@
     <!-- How the System Works Section -->
     <section id="how-it-works" class="py-16 px-4 bg-amber-50">
         <div class="container mx-auto">
-            <div class="text-center mb-12">
+            <div class="text-center mb-12" data-aos="fade-up">
                 <h2 class="text-3xl font-display font-bold text-dark mb-4">60 Minutes Delivery Process</h2>
                 <p class="text-gray-600 max-w-2xl mx-auto">We ensure your food reaches you hot and fresh within 60 minutes</p>
             </div>
@@ -368,12 +378,12 @@
             <div class="relative">
                 <!-- Progress Bar -->
                 <div class="hidden md:block h-1 bg-gray-200 absolute top-1/2 left-0 right-0 transform -translate-y-1/2 z-0"></div>
-                <div class="hidden md:block h-1 bg-primary absolute top-1/2 left-0 right-0 transform -translate-y-1/2 z-10" style="width: 75%;"></div>
+                <div class="hidden md:block h-1 bg-primary absolute top-1/2 left-0 right-0 transform -translate-y-1/2 z-10" style="width: 75%;" data-aos="width" data-aos-delay="800"></div>
                 
                 <!-- Steps -->
                 <div class="flex flex-col md:flex-row justify-between items-center md:items-start relative z-20">
                     <!-- Step 1 -->
-                    <div class="flex flex-col items-center mb-8 md:mb-0 w-full md:w-1/4">
+                    <div class="flex flex-col items-center mb-8 md:mb-0 w-full md:w-1/4" data-aos="fade-up" data-aos-delay="100">
                         <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white mb-4">
                             <i class="fas fa-utensils text-xl"></i>
                         </div>
@@ -382,7 +392,7 @@
                     </div>
                     
                     <!-- Step 2 -->
-                    <div class="flex flex-col items-center mb-8 md:mb-0 w-full md:w-1/4">
+                    <div class="flex flex-col items-center mb-8 md:mb-0 w-full md:w-1/4" data-aos="fade-up" data-aos-delay="200">
                         <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white mb-4">
                             <i class="fas fa-check text-xl"></i>
                         </div>
@@ -391,7 +401,7 @@
                     </div>
                     
                     <!-- Step 3 -->
-                    <div class="flex flex-col items-center mb-8 md:mb-0 w-full md:w-1/4">
+                    <div class="flex flex-col items-center mb-8 md:mb-0 w-full md:w-1/4" data-aos="fade-up" data-aos-delay="300">
                         <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white mb-4">
                             <i class="fas fa-cookie-bite text-xl"></i>
                         </div>
@@ -400,7 +410,7 @@
                     </div>
                     
                     <!-- Step 4 -->
-                    <div class="flex flex-col items-center w-full md:w-1/4">
+                    <div class="flex flex-col items-center w-full md:w-1/4" data-aos="fade-up" data-aos-delay="400">
                         <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white mb-4">
                             <i class="fas fa-truck text-xl"></i>
                         </div>
@@ -415,7 +425,7 @@
     <!-- Contact Us Section -->
     <section id="contact" class="py-16 px-4">
         <div class="container mx-auto">
-            <div class="text-center mb-12">
+            <div class="text-center mb-12" data-aos="fade-up">
                 <h2 class="text-3xl font-display font-bold text-dark mb-4">Contact Us</h2>
                 <p class="text-gray-600 max-w-2xl mx-auto">Have questions or want to place an order? Reach out to us!</p>
             </div>
@@ -599,6 +609,11 @@
         </div>
     </footer>
 
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary hover:bg-primary/90 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 opacity-0 invisible z-50">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <!-- Locomotive Scroll JS -->
     <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@4.1.4/dist/locomotive-scroll.min.js"></script>
     <!-- AOS Animation Library -->
@@ -618,46 +633,74 @@
         const mobileDropdownButton = document.getElementById('mobile-dropdown-button');
         const mobileDropdownContent = document.getElementById('mobile-dropdown-content');
         
-        mobileDropdownButton.addEventListener('click', () => {
-            mobileDropdownContent.classList.toggle('hidden');
-        });
+        if (mobileDropdownButton && mobileDropdownContent) {
+            mobileDropdownButton.addEventListener('click', () => {
+                mobileDropdownContent.classList.toggle('hidden');
+            });
+        }
         
-        // Initialize AOS animations
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true,
-            mirror: false
-        });
-        
-        // Initialize Locomotive Scroll
-        const scroll = new LocomotiveScroll({
-            el: document.querySelector('body'),
-            smooth: true,
-            smartphone: {
-                smooth: true
-            },
-            tablet: {
-                smooth: true
+        // Navbar scroll effect
+        const navbar = document.querySelector('nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('header-scrolled');
+            } else {
+                navbar.classList.remove('header-scrolled');
+            }
+            
+            // Back to top button visibility
+            const backToTopButton = document.getElementById('back-to-top');
+            if (window.scrollY > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100');
+            } else {
+                backToTopButton.classList.add('opacity-0', 'invisible');
+                backToTopButton.classList.remove('opacity-100');
             }
         });
         
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    scroll.scrollTo(targetElement);
+        // Back to top button functionality
+        document.getElementById('back-to-top').addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Initialize AOS animations with enhanced settings
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: false,
+            mirror: false,
+            offset: 120,
+            delay: 100,
+            anchorPlacement: 'top-bottom'
+        });
+        
+        // Disable Locomotive Scroll and use native smooth scrolling instead
+        document.addEventListener('DOMContentLoaded', () => {
+            // Smooth scrolling for anchor links using native browser behavior
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
                     
-                    // Close mobile menu if open
-                    if (!mobileMenu.classList.contains('hidden')) {
-                        mobileMenu.classList.add('hidden');
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        // Use native smooth scrolling
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        
+                        // Close mobile menu if open
+                        if (!mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.add('hidden');
+                        }
                     }
-                }
+                });
             });
         });
     </script>
