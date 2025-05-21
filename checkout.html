@@ -132,7 +132,7 @@
                         </div>
                         <div class="flex justify-between">
                             <span class="text-gray-600">Delivery Fee</span>
-                            <span id="checkout-delivery" class="font-medium">Rs. 50</span>
+                            <span id="checkout-delivery" class="font-medium">Rs. 0</span>
                         </div>
                         <div class="border-t border-gray-200 pt-2 mt-2">
                             <div class="flex justify-between font-semibold">
@@ -299,9 +299,28 @@
             // Load checkout data
             loadCheckoutData();
             
+            // Add phone number validation
+            const phoneInput = document.getElementById('phone');
+            phoneInput.addEventListener('input', function(e) {
+                // Remove any non-digit characters
+                this.value = this.value.replace(/\D/g, '');
+                
+                // Limit to 10 digits
+                if (this.value.length > 10) {
+                    this.value = this.value.slice(0, 10);
+                }
+            });
+            
             // Handle form submission
             document.getElementById('checkout-form').addEventListener('submit', function(e) {
                 e.preventDefault();
+                
+                // Validate phone number
+                const phoneNumber = document.getElementById('phone').value;
+                if (phoneNumber.length !== 10) {
+                    alert('Please enter a valid 10-digit phone number');
+                    return;
+                }
                 
                 // Show success modal
                 document.getElementById('success-modal').classList.remove('hidden');
@@ -341,13 +360,17 @@
             const checkoutData = localStorage.getItem('checkoutData');
             
             if (!checkoutData) {
-                // Redirect to cart page if no checkout data
-                window.location.href = 'cart.html';
+                // Set default values if no checkout data
+                document.getElementById('checkout-delivery').textContent = 'Rs. 0';
+                document.getElementById('checkout-total').textContent = 'Rs. 0';
                 return;
             }
             
             const data = JSON.parse(checkoutData);
             const checkoutItemsContainer = document.getElementById('checkout-items');
+            
+            // Clear existing items
+            checkoutItemsContainer.innerHTML = '';
             
             // Display order items
             Object.values(data.items).forEach(item => {
@@ -369,8 +392,14 @@
             
             // Update order summary
             document.getElementById('checkout-subtotal').textContent = `Rs. ${data.subtotal}`;
-            document.getElementById('checkout-delivery').textContent = `Rs. ${data.deliveryCharge}`;
-            document.getElementById('checkout-total').textContent = `Rs. ${data.total}`;
+            
+            // Set delivery charge to 0
+            const deliveryCharge = 0;
+            document.getElementById('checkout-delivery').textContent = `Rs. ${deliveryCharge}`;
+            
+            // Calculate total (subtotal only, no delivery charge)
+            const total = data.subtotal;
+            document.getElementById('checkout-total').textContent = `Rs. ${total}`;
         }
     </script>
 </body>

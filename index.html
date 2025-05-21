@@ -14,7 +14,7 @@
               primary: "#FF6B6B",
               secondary: "#e4a672",
               dark: "#292F36",
-              light: "#FFF9EA" ,
+              light: "#FFF9EA",
               accent: "#c06c54",
               gold: "#DEB887",
             },
@@ -166,7 +166,11 @@
               class="nav-link text-dark hover:text-primary transition-colors duration-300"
               >Menu</a
             >
-
+             <a
+              href="menu.html"
+              class="nav-link text-dark hover:text-primary transition-colors duration-300"
+              >All Menu</a
+            >
             <!-- Cart Icon -->
             <a
               href="cart.html"
@@ -207,6 +211,12 @@
             >Home</a
           >
           <a
+            href="menu.html"
+            class="block py-2 text-dark hover:text-primary nav-link"
+            >All Menu</a
+          >
+
+          <a
             href="#about"
             class="block py-2 text-dark hover:text-primary nav-link"
             >About Us</a
@@ -217,6 +227,7 @@
             >Menu</a
           >
 
+           
           <div class="flex items-center justify-between mt-4">
             <a href="cart.html" class="text-dark hover:text-primary relative">
               <i class="fas fa-shopping-cart text-lg"></i>
@@ -1094,6 +1105,45 @@
 
       // Disable Locomotive Scroll and use native smooth scrolling instead
       document.addEventListener("DOMContentLoaded", () => {
+        // Update cart count on page load
+        updateCartCount();
+
+        // Add event listeners to "Add to Cart" buttons
+        document
+          .querySelectorAll(".bg-primary.text-white")
+          .forEach((button) => {
+            if (button.textContent.trim() === "Add to Cart") {
+              button.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                // Get product details from the parent container
+                const productCard = this.closest(
+                  ".bg-white.rounded-lg.shadow-md.overflow-hidden"
+                );
+                const productName = productCard.querySelector("h4").textContent;
+                const productPrice = productCard
+                  .querySelector(".font-semibold:not(h4)")
+                  .textContent.replace("Rs. ", "");
+                const productImage = productCard.querySelector("img").src;
+
+                // Generate a unique ID for the product
+                const productId = productName
+                  .toLowerCase()
+                  .replace(/\s+/g, "-");
+
+                // Add to cart
+                addToCart(
+                  productId,
+                  productName,
+                  parseInt(productPrice),
+                  productImage
+                );
+
+                // Show confirmation message
+                showAddedToCartMessage(productName);
+              });
+            }
+          });
         // Smooth scrolling for anchor links using native browser behavior
         document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
           anchor.addEventListener("click", function (e) {
@@ -1117,6 +1167,65 @@
           });
         });
       });
+
+      // Cart functionality
+      function getCartItems() {
+        const cartItems = localStorage.getItem("cartItems");
+        return cartItems ? JSON.parse(cartItems) : {};
+      }
+
+      function addToCart(id, name, price, image) {
+        const cartItems = getCartItems();
+
+        if (cartItems[id]) {
+          cartItems[id].quantity += 1;
+        } else {
+          cartItems[id] = {
+            id: id,
+            name: name,
+            price: price,
+            image: image,
+            quantity: 1,
+          };
+        }
+
+        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        updateCartCount();
+      }
+
+      function updateCartCount() {
+        const cartItems = getCartItems();
+        const totalItems = Object.values(cartItems).reduce(
+          (total, item) => total + item.quantity,
+          0
+        );
+
+        // Update cart count in the header
+        const cartCountElements = document.querySelectorAll(
+          ".fa-shopping-cart + span"
+        );
+        cartCountElements.forEach((element) => {
+          element.textContent = totalItems;
+        });
+      }
+
+      function showAddedToCartMessage(productName) {
+        // Create a toast notification
+        const toast = document.createElement("div");
+        toast.className =
+          "fixed bottom-4 right-4 bg-primary text-white px-4 py-2 rounded-md shadow-lg z-50 transition-opacity duration-300";
+        toast.innerHTML = `<i class="fas fa-check-circle mr-2"></i> ${productName} added to cart`;
+
+        document.body.appendChild(toast);
+
+        // Remove the toast after 3 seconds
+        setTimeout(() => {
+          toast.style.opacity = "0";
+          setTimeout(() => {
+            document.body.removeChild(toast);
+          }, 300);
+        }, 3000);
+      }
     </script>
   </body>
 </html>

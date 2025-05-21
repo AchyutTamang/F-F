@@ -70,7 +70,11 @@
                     <a href="index.html#home" class="nav-link text-dark hover:text-primary transition-colors duration-300">Home</a>
                     <a href="index.html#about" class="nav-link text-dark hover:text-primary transition-colors duration-300">About Us</a>
                     <a href="index.html#menu" class="nav-link text-dark hover:text-primary transition-colors duration-300">Menu</a>
-
+                     <a
+              href="menu.html"
+              class="nav-link text-dark hover:text-primary transition-colors duration-300"
+              >All Menu</a
+            >
                     <!-- Cart Icon -->
                     <a href="cart.html" class="text-primary hover:text-primary/80 transition-colors duration-300 relative">
                         <i class="fas fa-shopping-cart text-lg"></i>
@@ -141,7 +145,7 @@
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-600">Delivery Fee</span>
-                        <span class="font-medium">Rs. 50</span>
+                        <span class="font-medium">Rs. 0</span>
                     </div>
                     <div class="border-t border-gray-200 pt-2 mt-2">
                         <div class="flex justify-between font-semibold">
@@ -348,8 +352,9 @@
             });
             
             // Update subtotal and total
+            const deliveryCharge = 0; // Set delivery charge to Rs. 0
             document.getElementById('subtotal').textContent = `Rs. ${subtotal}`;
-            document.getElementById('total').textContent = `Rs. ${subtotal + 50}`; // Adding delivery fee
+            document.getElementById('total').textContent = `Rs. ${subtotal + deliveryCharge}`; // Adding delivery fee
         }
 
         function getCartItems() {
@@ -387,10 +392,19 @@
 
         // Checkout button functionality
         document.getElementById('checkout-btn').addEventListener('click', function() {
-            alert('Thank you for your order! This would proceed to payment in a real application.');
-            // Clear cart after checkout
-            localStorage.removeItem('cartItems');
-            updateCartDisplay();
+            // Save cart data for the checkout page
+            const cartItems = getCartItems();
+            const subtotal = Object.values(cartItems).reduce((total, item) => total + (item.price * item.quantity), 0);
+            const checkoutData = {
+                items: cartItems,
+                subtotal: subtotal,
+                deliveryCharge: 50,
+                total: subtotal + 50
+            };
+            localStorage.setItem('checkoutData', JSON.stringify(checkoutData));
+            
+            // Redirect to checkout page
+            window.location.href = 'checkout.html';
         });
     </script>
 </body>
