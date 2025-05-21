@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu - F&F Coffee Hub</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#FF6B6B",
+              secondary: "#e4a672",
+              dark: "#292F36",
+              light: "#FFF9EA",
+              accent: "#c06c54",
+              gold: "#DEB887",
+            },
+            fontFamily: {
+              sans: ["Montserrat", "sans-serif"],
+              display: ["Cormorant Garamond", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <style>
+      .header-bg {
+        background-color: rgba(255, 249, 234, 0.85);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+      }
+
+      .header-scrolled {
+        background-color: rgba(255, 249, 234, 0.95);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-link {
+        font-size: 15px;
+        font-weight: 500;
+      }
+      
+      .category-btn.active {
+        background-color: #FF6B6B;
+        color: white;
+      }
+      
+      .menu-item {
+        transition: all 0.3s ease;
+      }
+      
+      .menu-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+      
+      /* Range slider styling */
+      input[type="range"] {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 8px;
+        border-radius: 5px;
+        background: #e4e4e4;
+        outline: none;
+      }
+      
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #FF6B6B;
+        cursor: pointer;
+      }
+      
+      input[type="range"]::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #FF6B6B;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body class="font-sans bg-light">
+    <!-- Navbar -->
+    <nav class="header-bg fixed top-0 left-0 w-full z-50">
+      <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+          <!-- Logo -->
+          <div class="flex items-center">
+            <a href="index.html" class="flex items-center">
+              <img
+                src="photos/F&F.svg"
+                alt="F&F Coffee Hub Logo"
+                class="h-12 mr-3"
+              />
+              <span class="text-xl font-medium text-dark"
+                >Froth & Flavours Coffee Hub</span
+              >
+            </a>
+          </div>
+
+          <!-- Desktop Navigation -->
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="index.html#home"
+              class="nav-link text-dark hover:text-primary transition-colors duration-300"
+              >Home</a
+            >
+            <a
+              href="index.html#about"
+              class="nav-link text-dark hover:text-primary transition-colors duration-300"
+              >About Us</a
+            >
+            <a
+              href="index.html#menu"
+              class="nav-link text-dark hover:text-primary transition-colors duration-300"
+              >Menu</a
+            >
+            <a
+              href="menu.html"
+              class="nav-link text-primary font-semibold transition-colors duration-300"
+              >All Menu</a
+            >
+            <!-- Cart Icon -->
+            <a
+              href="cart.html"
+              class="text-dark hover:text-primary transition-colors duration-300 relative"
+            >
+              <i class="fas fa-shopping-cart text-lg"></i>
+              <span
+                id="cart-count"
+                class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                >0</span
+              >
+            </a>
+
+            <!-- Contact Us Button -->
+            <a
+              href="index.html#contact"
+              class="bg-accent hover:bg-accent/90 text-white px-6 py-2 rounded-full transition-colors duration-300 text-sm font-medium"
+            >
+              Contact Us
+            </a>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <div class="md:hidden">
+            <button
+              id="mobile-menu-button"
+              class="text-dark focus:outline-none"
+            >
+              <i class="fas fa-bars text-xl"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden pb-4">
+          <a
+            href="index.html#home"
+            class="block py-2 text-dark hover:text-primary nav-link"
+            >Home</a
+          >
+          <a
+            href="index.html#about"
+            class="block py-2 text-dark hover:text-primary nav-link"
+            >About Us</a
+          >
+          <a
+            href="index.html#menu"
+            class="block py-2 text-dark hover:text-primary nav-link"
+            >Menu</a
+          >
+          <a
+            href="menu.html"
+            class="block py-2 text-primary font-semibold nav-link"
+            >All Menu</a
+          >
+
+          <div class="flex items-center justify-between mt-4">
+            <a href="cart.html" class="text-dark hover:text-primary relative">
+              <i class="fas fa-shopping-cart text-lg"></i>
+              <span
+                id="mobile-cart-count"
+                class="absolute -top-2 -right-2 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center"
+                >0</span
+              >
+            </a>
+            <a
+              href="index.html#contact"
+              class="bg-accent hover:bg-accent/90 text-white px-5 py-2 rounded-full text-sm font-medium"
+            >
+              Contact Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Menu Header -->
+    <section class="pt-32 pb-10 px-4 bg-amber-50">
+      <div class="container mx-auto">
+        <div class="text-center mb-8" data-aos="fade-up">
+          <h1 class="text-4xl md:text-5xl font-display font-bold text-dark mb-4">
+            Our Complete Menu
+          </h1>
+          <p class="text-gray-600 max-w-2xl mx-auto">
+            Explore our wide selection of delicious food and beverages
+          </p>
+        </div>
+        
+        <!-- Search and Filter -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-10" data-aos="fade-up">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Search by name -->
+            <div>
+              <label for="search" class="block text-gray-700 mb-2 font-medium">Search by Name</label>
+              <div class="relative">
+                <input 
+                  type="text" 
+                  id="search" 
+                  placeholder="Search menu items..." 
+                  class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 pl-10"
+                >
+                <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+              </div>
+            </div>
+            
+            <!-- Price range filter -->
+            <div>
+              <label for="min-price" class="block text-gray-700 mb-2 font-medium">Min Price: <span id="min-price-value">Rs. 0</span></label>
+              <input 
+                type="range" 
+                id="min-price" 
+                min="0" 
+                max="700" 
+                step="10" 
+                value="0" 
+                class="w-full"
+              >
+            </div>
+            
+            <div>
+              <label for="max-price" class="block text-gray-700 mb-2 font-medium">Max Price: <span id="max-price-value">Rs. 700</span></label>
+              <input 
+                type="range" 
+                id="max-price" 
+                min="0" 
+                max="700" 
+                step="10" 
+                value="700" 
+                class="w-full"
+              >
+            </div>
+          </div>
+          
+          <div class="mt-4 text-center">
+            <button id="reset-filters" class="bg-gray-200 hover:bg-gray-300 text-dark px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300">
+              Reset Filters
+            </button>
+          </div>
+        </div>
+        
+        <!-- Category Buttons -->
+        <div class="flex flex-wrap justify-center gap-3 mb-8" data-aos="fade-up">
+          <button class="category-btn active bg-primary text-white px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300" data-category="all">
+            All Items
+          </button>
+          <button class="category-btn bg-white hover:bg-primary hover:text-white text-dark px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300" data-category="refreshers">
+            Refreshers
+          </button>
+          <button class="category-btn bg-white hover:bg-primary hover:text-white text-dark px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300" data-category="manuel-brew">
+            Manuel Brew
+          </button>
+          <button class="category-btn bg-white hover:bg-primary hover:text-white text-dark px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300" data-category="pizza">
+            Pizza
+          </button>
+          <button class="category-btn bg-white hover:bg-primary hover:text-white text-dark px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300" data-category="breakfast">
+            Breakfast
+          </button>
+          <button class="category-btn bg-white hover:bg-primary hover:text-white text-dark px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300" data-category="soft-drinks">
+            Soft Drinks
+          </button>
+          <button class="category-btn bg-white hover:bg-primary hover:text-white text-dark px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300" data-category="chilled-beverages">
+            Chilled Beverages
+          </button>
+          <button class="category-btn bg-white hover:bg-primary hover:text-white text-dark px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300" data-category="hot-espresso">
+            Hot Espresso
+          </button>
+          <button class="category-btn bg-white hover:bg-primary hover:text-white text-dark px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300" data-category="food">
+            Food Items
+          </button>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Menu Items -->
+    <section class="py-10 px-4">
+      <div class="container mx-auto">
+        <div id="menu-items-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <!-- Menu items will be dynamically added here -->
+        </div>
+        
+        <!-- No Results Message -->
+        <div id="no-results" class="hidden text-center py-10">
+          <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
+          <h3 class="text-xl font-semibold text-dark mb-2">No items found</h3>
+          <p class="text-gray-600">Try adjusting your search or filter criteria</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-12 pb-6">
+      <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          <!-- Logo and About -->
+          <div>
+            <div class="flex items-center mb-4">
+              <img
+                src="photos/F&F.svg"
+                alt="F&F Coffee Hub Logo"
+                class="h-10 mr-3 bg-white p-1 rounded"
+              />
+              <span class="text-xl font-semibold">F&F Coffee Hub</span>
+            </div>
+            <p class="text-gray-400 mb-4">
+              Serving delicious food and beverages 24/7. Your go-to place for
+              quality dining in Pokhara.
+            </p>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+            <ul class="space-y-2">
+              <li>
+                <a
+                  href="index.html#home"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="index.html#about"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                  >About Us</a
+                >
+              </li>
+              <li>
+                <a
+                  href="index.html#menu"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                  >Menu</a
+                >
+              </li>
+              <li>
+                <a
+                  href="index.html#contact"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Contact Info -->
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Contact Info</h4>
+            <ul class="space-y-2">
+              <li class="flex items-start">
+                <i class="fas fa-map-marker-alt mt-1 mr-2"></i>
+                <span class="text-gray-400">Lakeside-6, Pokhara, Nepal</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-phone-alt mt-1 mr-2"></i>
+                <span class="text-gray-400">+977 9843235566</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-envelope mt-1 mr-2"></i>
+                <span class="text-gray-400">info@ffcoffeehub.com</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Opening Hours -->
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Opening Hours</h4>
+            <ul class="space-y-2">
+              <li class="text-gray-400">Monday - Sunday</li>
+              <li class="text-gray-400">Open 24 Hours</li>
+            </ul>
+
+            <div class="mt-6">
+              <h5 class="font-semibold mb-3">Follow Us</h5>
+              <div class="flex space-x-4">
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  <i class="fab fa-instagram"></i>
+                </a>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a
+                  href="#"
+                  class="text-gray-400 hover:text-white transition-colors duration-300"
+                >
+                  <i class="fab fa-tiktok"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-700 pt-6 text-center">
+          <p class="text-gray-400">
+            © 2023 F&F Coffee Hub. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button
+      id="back-to-top"
+      class="fixed bottom-6 right-6 bg-primary hover:bg-primary/90 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 opacity-0 invisible z-50"
+    >
+      <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- AOS Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <!-- JavaScript for Menu Functionality -->
+    <script>
+      // Menu data
+      const menuItems = [
+        // Refreshers
+        { id: 'lemonade', name: 'Lemonade', price: 170, category: 'refreshers', image: 'https://images.unsplash.com/photo-1551024709-8f23befc6f87?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'mint-lemonade', name: 'Mint Lemonade', price: 250, category: 'refreshers', image: 'https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'virgin-mojito', name: 'Virgin Mojito', price: 230, category: 'refreshers', image: 'https://images.unsplash.com/photo-1546171753-97d7676e4602?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'espresso-lemonade', name: 'Espresso Lemonade', price: 300, category: 'refreshers', image: 'https://images.unsplash.com/photo-1595981267035-7b04ca84a82d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        
+        // Manuel Brew
+        { id: 'v60', name: 'V60', price: 600, category: 'manuel-brew', image: 'https://images.unsplash.com/photo-1544442069-5bc44195c90d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'french-press', name: 'French Press', price: 500, category: 'manuel-brew', image: 'https://images.unsplash.com/photo-1545665225-b23b99e4d45e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'aeropress', name: 'Aeropress', price: 500, category: 'manuel-brew', image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'moka-pot', name: 'Moka Pot', price: 500, category: 'manuel-brew', image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'ice-pourover', name: 'Ice Pourover', price: 650, category: 'manuel-brew', image: 'https://images.unsplash.com/photo-1558122104-ebc101c101c8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'syphone', name: 'Syphone', price: 700, category: 'manuel-brew', image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        
+        // Pizza
+        { id: 'veg-mushroom-m', name: 'Veg Mushroom Pizza (M)', price: 400, category: 'pizza', image: 'https://images.unsplash.com/photo-1604917877934-07d8d248d396?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'veg-mushroom-l', name: 'Veg Mushroom Pizza (L)', price: 500, category: 'pizza', image: 'https://images.unsplash.com/photo-1604917877934-07d8d248d396?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'chicken-pizza-m', name: 'Chicken Pizza (M)', price: 500, category: 'pizza', image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'chicken-pizza-l', name: 'Chicken Pizza (L)', price: 600, category: 'pizza', image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'meat-lover-m', name: 'Meat Lover Pizza (M)', price: 600, category: 'pizza', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'meat-lover-l', name: 'Meat Lover Pizza (L)', price: 700, category: 'pizza', image: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        
+        // Breakfast
+        { id: 'french-breakfast', name: 'French Breakfast', price: 400, category: 'breakfast', image: 'https://images.unsplash.com/photo-1533089860892-a9b969df67d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'nepali-breakfast', name: 'Nepali Breakfast', price: 450, category: 'breakfast', image: 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'american-breakfast', name: 'American Breakfast', price: 450, category: 'breakfast', image: 'https://images.unsplash.com/photo-1533920379810-6bedac9e31e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'ff-special-breakfast', name: 'F&F Special Breakfast', price: 550, category: 'breakfast', image: 'https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        
+        // Soft Drinks
+        { id: 'cold-drinks', name: 'Sprite', price: 80, category: 'soft-drinks', image: 'https://images.unsplash.com/photo-1581006852262-e4307cf6283a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+         { id: 'cold-drinks', name: 'Coke', price: 80, category: 'soft-drinks', image: 'https://images.unsplash.com/photo-1581006852262-e4307cf6283a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+          { id: 'cold-drinks', name: 'Fanta', price: 80, category: 'soft-drinks', image: 'https://images.unsplash.com/photo-1581006852262-e4307cf6283a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'fresh-juice', name: 'Fresh Juice', price: 170, category: 'soft-drinks', image: 'https://images.unsplash.com/photo-1534353473418-4cfa6c56fd38?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        
+        // Chilled Beverages
+        { id: 'iced-americano', name: 'Iced Americano', price: 160, category: 'chilled-beverages', image: 'https://images.unsplash.com/photo-1517701604599-bb29b565090c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'iced-latte', name: 'Iced Latte', price: 210, category: 'chilled-beverages', image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'iced-cappuccino', name: 'Iced Cappuccino', price: 210, category: 'chilled-beverages', image: 'https://images.unsplash.com/photo-1534687941688-651ccaafbff8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'iced-long-black', name: 'Iced Long Black with Honey', price: 190, category: 'chilled-beverages', image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'iced-mocha', name: 'Iced Mocha', price: 250, category: 'chilled-beverages', image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        
+        // Hot Espresso Beverages
+        { id: 'espresso', name: 'Espresso', price: 120, category: 'hot-espresso', image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'doppio', name: 'Doppio', price: 140, category: 'hot-espresso', image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'americano', name: 'Americano', price: 130, category: 'hot-espresso', image: 'https://images.unsplash.com/photo-1521302080334-4bebac2763a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        { id: 'cappuccino', name: 'Cappuccino', price: 160, category: 'hot-espresso', image: 'https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80' },
+             <!-- The rest of the menu items data -->
+          { id: 'latte', name: 'Latte', price: 160, category: 'hot-espresso', image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+          { id: 'mocha', name: 'Mocha', price: 200, category: 'hot-espresso', image: 'https://images.unsplash.com/photo-1572442388796-11668a67e53d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+          
+          // Food items
+          { id: 'chowmein-veg', name: 'Chowmein (Veg)', price: 100, category: 'food', image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+          { id: 'chowmein-chicken', name: 'Chowmein (Chicken)', price: 140, category: 'food', image: 'https://images.unsplash.com/photo-1585032226651-759b368d7246?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+          { id: 'curry-mushroom', name: 'Curry Mushroom (Half Kg)', price: 450, category: 'food', image: 'https://images.unsplash.com/photo-1574484284002-952d92456975?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+          { id: 'curry-paneer', name: 'Curry Paneer (Half Kg)', price: 550, category: 'food', image: 'https://images.unsplash.com/photo-1574484284002-952d92456975?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+          { id: 'curry-chicken', name: 'Curry Chicken (Half Kg)', price: 700, category: 'food', image: 'https://images.unsplash.com/photo-1574484284002-952d92456975?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+          { id: 'fried-rice-veg', name: 'Fried Rice (Veg)', price: 150, category: 'food', image: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+          { id: 'fried-rice-chicken', name: 'Fried Rice (Chicken)', price: 200, category: 'food', image: 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+          { id: 'momo-steam', name: 'Momo (Steam)', price: 140, category: 'food', image: 'https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+          { id: 'momo-fried', name: 'Momo (Fried)', price: 170, category: 'food', image: 'https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+          { id: 'momo-chilly', name: 'Momo (Chilly)', price: 220, category: 'food', image: 'https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1257&q=80' },
+        ];
+
+      // DOM elements
+      const menuContainer = document.getElementById('menu-items-container');
+      const noResultsMessage = document.getElementById('no-results');
+      const searchInput = document.getElementById('search');
+      const minPriceInput = document.getElementById('min-price');
+      const maxPriceInput = document.getElementById('max-price');
+      const minPriceValue = document.getElementById('min-price-value');
+      const maxPriceValue = document.getElementById('max-price-value');
+      const resetFiltersBtn = document.getElementById('reset-filters');
+      const categoryButtons = document.querySelectorAll('.category-btn');
+      
+      // Current filter state
+      let currentFilters = {
+        search: '',
+        minPrice: 0,
+        maxPrice: 700,
+        category: 'all'
+      };
+      
+      // Initialize the menu
+      function initMenu() {
+        // Initialize AOS
+        AOS.init({
+          duration: 800,
+          easing: 'ease-in-out',
+          once: false,
+          mirror: false,
+          offset: 120,
+          delay: 100,
+        });
+        
+        // Render all menu items initially
+        renderMenuItems();
+        
+        // Set up event listeners
+        setupEventListeners();
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > 300) {
+            backToTopButton.classList.remove('opacity-0', 'invisible');
+            backToTopButton.classList.add('opacity-100');
+          } else {
+            backToTopButton.classList.add('opacity-0', 'invisible');
+            backToTopButton.classList.remove('opacity-100');
+          }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        });
+      }
+      
+      // Set up event listeners for filters
+      function setupEventListeners() {
+        // Search input
+        searchInput.addEventListener('input', (e) => {
+          currentFilters.search = e.target.value.toLowerCase();
+          renderMenuItems();
+        });
+        
+        // Min price range
+        minPriceInput.addEventListener('input', (e) => {
+          const value = parseInt(e.target.value);
+          currentFilters.minPrice = value;
+          minPriceValue.textContent = `Rs. ${value}`;
+          
+          // Ensure min price doesn't exceed max price
+          if (value > currentFilters.maxPrice) {
+            maxPriceInput.value = value;
+            currentFilters.maxPrice = value;
+            maxPriceValue.textContent = `Rs. ${value}`;
+          }
+          
+          renderMenuItems();
+        });
+        
+        // Max price range
+        maxPriceInput.addEventListener('input', (e) => {
+          const value = parseInt(e.target.value);
+          currentFilters.maxPrice = value;
+          maxPriceValue.textContent = `Rs. ${value}`;
+          
+          // Ensure max price isn't less than min price
+          if (value < currentFilters.minPrice) {
+            minPriceInput.value = value;
+            currentFilters.minPrice = value;
+            minPriceValue.textContent = `Rs. ${value}`;
+          }
+          
+          renderMenuItems();
+        });
+        
+        // Reset filters button
+        resetFiltersBtn.addEventListener('click', () => {
+          // Reset search
+          searchInput.value = '';
+          currentFilters.search = '';
+          
+          // Reset price ranges
+          minPriceInput.value = 0;
+          maxPriceInput.value = 700;
+          currentFilters.minPrice = 0;
+          currentFilters.maxPrice = 700;
+          minPriceValue.textContent = 'Rs. 0';
+          maxPriceValue.textContent = 'Rs. 700';
+          
+          // Reset category
+          currentFilters.category = 'all';
+          categoryButtons.forEach(btn => {
+            btn.classList.remove('active', 'bg-primary', 'text-white');
+            btn.classList.add('bg-white', 'hover:bg-primary', 'hover:text-white', 'text-dark');
+            
+            if (btn.dataset.category === 'all') {
+              btn.classList.add('active', 'bg-primary', 'text-white');
+              btn.classList.remove('bg-white', 'hover:bg-primary', 'hover:text-white', 'text-dark');
+            }
+          });
+          
+          renderMenuItems();
+        });
+        
+        // Category buttons
+        categoryButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            // Update active state
+            categoryButtons.forEach(b => {
+              b.classList.remove('active', 'bg-primary', 'text-white');
+              b.classList.add('bg-white', 'hover:bg-primary', 'hover:text-white', 'text-dark');
+            });
+            
+            btn.classList.add('active', 'bg-primary', 'text-white');
+            btn.classList.remove('bg-white', 'hover:bg-primary', 'hover:text-white', 'text-dark');
+            
+            // Update filter
+            currentFilters.category = btn.dataset.category;
+            renderMenuItems();
+          });
+        });
+      }
+      
+      // Filter menu items based on current filters
+      function filterMenuItems() {
+        return menuItems.filter(item => {
+          // Filter by search term
+          const matchesSearch = item.name.toLowerCase().includes(currentFilters.search);
+          
+          // Filter by price range
+          const matchesPrice = item.price >= currentFilters.minPrice && item.price <= currentFilters.maxPrice;
+          
+          // Filter by category
+          const matchesCategory = currentFilters.category === 'all' || item.category === currentFilters.category;
+          
+          return matchesSearch && matchesPrice && matchesCategory;
+        });
+      }
+      
+      // Render menu items based on current filters
+      function renderMenuItems() {
+        const filteredItems = filterMenuItems();
+        
+        // Clear container
+        menuContainer.innerHTML = '';
+        
+        // Show no results message if no items match filters
+        if (filteredItems.length === 0) {
+          noResultsMessage.classList.remove('hidden');
+        } else {
+          noResultsMessage.classList.add('hidden');
+          
+          // Render each item
+          filteredItems.forEach(item => {
+            const itemElement = createMenuItemElement(item);
+            menuContainer.appendChild(itemElement);
+          });
+        }
+      }
+      
+      // Create HTML element for a menu item
+      function createMenuItemElement(item) {
+        const div = document.createElement('div');
+        div.className = 'menu-item bg-white rounded-lg shadow-md overflow-hidden';
+        div.setAttribute('data-aos', 'fade-up');
+        
+        div.innerHTML = `
+          <img src="${item.image}" alt="${item.name}" class="w-full h-48 object-cover">
+          <div class="p-4">
+            <div class="flex justify-between items-center mb-2">
+              <h4 class="text-lg font-semibold">${item.name}</h4>
+              <span class="font-semibold">Rs. ${item.price}</span>
+            </div>
+            <div class="flex space-x-2 mt-4">
+              <button class="order-now-btn bg-accent text-white px-4 py-2 rounded text-sm font-medium flex-1 text-center" data-id="${item.id}">
+                Order Now
+              </button>
+              <button class="add-to-cart-btn bg-primary text-white px-4 py-2 rounded text-sm font-medium flex-1 text-center" data-id="${item.id}">
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        `;
+        
+        // Add event listeners to buttons
+        const addToCartBtn = div.querySelector('.add-to-cart-btn');
+        const orderNowBtn = div.querySelector('.order-now-btn');
+        
+        addToCartBtn.addEventListener('click', () => {
+          addToCart(item.id, item.name, item.price, item.image);
+          showNotification(`${item.name} added to cart!`);
+          updateCartCount();
+        });
+        
+        orderNowBtn.addEventListener('click', () => {
+          addToCart(item.id, item.name, item.price, item.image);
+          window.location.href = 'cart.html';
+        });
+        
+        return div;
+      }
+      
+      // Cart functionality
+      function getCart() {
+        return JSON.parse(localStorage.getItem('cart') || '[]');
+      }
+      
+      function addToCart(id, name, price, image) {
+        const cart = getCart();
+        
+        // Check if item already exists in cart
+        const existingItemIndex = cart.findIndex(item => item.id === id);
+        
+        if (existingItemIndex !== -1) {
+          // Increment quantity if item already exists
+          cart[existingItemIndex].quantity += 1;
+        } else {
+          // Add new item to cart
+          cart.push({
+            id,
+            name,
+            price,
+            image,
+            quantity: 1
+          });
+        }
+        
+        // Save updated cart to localStorage
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+        // Update cart count
+        updateCartCount();
+      }
+      
+      function updateCartCount() {
+        const cart = getCart();
+        const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+        
+        // Update cart count in header
+        document.getElementById('cart-count').textContent = totalItems;
+        
+        // Update mobile cart count if it exists
+        const mobileCartCount = document.getElementById('mobile-cart-count');
+        if (mobileCartCount) {
+          mobileCartCount.textContent = totalItems;
+        }
+      }
+      
+      // Show notification
+      function showNotification(message) {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.className = 'fixed top-20 right-4 bg-primary text-white px-4 py-2 rounded-md shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+        notification.textContent = message;
+        
+        // Add to DOM
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+          notification.classList.remove('translate-x-full');
+        }, 10);
+        
+        // Remove after delay
+        setTimeout(() => {
+          notification.classList.add('translate-x-full');
+          
+          // Remove from DOM after animation completes
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 300);
+        }, 3000);
+      }
+      
+      // Initialize menu when DOM is loaded
+      document.addEventListener('DOMContentLoaded', initMenu);
+    </script>
+  </body>
+</html>
