@@ -117,18 +117,18 @@
     <!-- Cart Section -->
     <section class="pt-32 pb-16 px-4">
         <div class="container mx-auto">
-            <div class="text-center mb-12" data-aos="fade-up">
+            <div class="text-center mb-12">
                 <h2 class="text-3xl font-display font-bold text-dark mb-4">Your Shopping Cart</h2>
                 <p class="text-gray-600 max-w-2xl mx-auto">Review your items and proceed to checkout</p>
             </div>
 
-            <div class="bg-white rounded-lg shadow-md p-6 mb-8" data-aos="fade-up">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
                 <div id="cart-items" class="divide-y divide-gray-200">
                     <!-- Cart items will be displayed here -->
                     <div id="empty-cart-message" class="py-8 text-center">
                         <i class="fas fa-shopping-cart text-4xl text-gray-300 mb-4"></i>
                         <p class="text-gray-500">Your cart is empty</p>
-                        <a href="index.html#menu" class="inline-block mt-4 bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-md font-medium transition-colors duration-300">
+                        <a href="menu.html" class="inline-block mt-4 bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-md font-medium transition-colors duration-300">
                             Browse Menu
                         </a>
                     </div>
@@ -136,7 +136,7 @@
             </div>
 
             <!-- Order Summary -->
-            <div id="order-summary" class="bg-white rounded-lg shadow-md p-6 mb-8 hidden" data-aos="fade-up" data-aos-delay="100">
+            <div id="order-summary" class="bg-white rounded-lg shadow-md p-6 mb-8 hidden">
                 <h3 class="text-xl font-semibold text-dark mb-4">Order Summary</h3>
                 <div class="space-y-2 mb-4">
                     <div class="flex justify-between">
@@ -145,7 +145,7 @@
                     </div>
                     <div class="flex justify-between">
                         <span class="text-gray-600">Delivery Fee</span>
-                        <span class="font-medium">Rs. 0</span>
+                        <span class="font-medium">Rs. 150</span>
                     </div>
                     <div class="border-t border-gray-200 pt-2 mt-2">
                         <div class="flex justify-between font-semibold">
@@ -235,14 +235,14 @@
             </div>
             
             <div class="border-t border-gray-700 pt-6 text-center">
-                <p class="text-gray-400">© 2023 F&F Coffee Hub. All rights reserved.</p>
+                <p class="text-gray-400">F&F Coffee Hub</p>
             </div>
         </div>
     </footer>
 
     <!-- AOS Animation Library -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
+    <script src="js/cart.js"></script>
     <!-- JavaScript for Cart Functionality -->
     <script>
         // Mobile menu toggle
@@ -254,158 +254,187 @@
         });
 
         // Initialize AOS animations
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true
-        });
+        // AOS.init({
+        //     duration: 800,
+        //     easing: 'ease-in-out',
+        //     once: true
+        // });
 
         // Cart functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            updateCartDisplay();
-        });
-
-        function updateCartDisplay() {
-            const cartItems = getCartItems();
-            const cartItemsContainer = document.getElementById('cart-items');
-            const emptyCartMessage = document.getElementById('empty-cart-message');
-            const orderSummary = document.getElementById('order-summary');
-            const cartCount = document.getElementById('cart-count');
-            const mobileCartCount = document.getElementById('mobile-cart-count');
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     console.log('DOM loaded, initializing cart...');
             
-            // Update cart count
-            const totalItems = Object.values(cartItems).reduce((total, item) => total + item.quantity, 0);
-            cartCount.textContent = totalItems;
-            mobileCartCount.textContent = totalItems;
+        //     // Remove any existing event listeners from the cart container
+        //     const cartItemsContainer = document.getElementById('cart-items');
+        //     const newContainer = cartItemsContainer.cloneNode(true);
+        //     cartItemsContainer.parentNode.replaceChild(newContainer, cartItemsContainer);
             
-            // If cart is empty, show empty message and hide order summary
-            if (totalItems === 0) {
-                emptyCartMessage.classList.remove('hidden');
-                orderSummary.classList.add('hidden');
-                return;
-            }
+        //     // Debug: Check what's in localStorage
+        //     console.log('Current cart in localStorage:', localStorage.getItem('cart'));
             
-            // Otherwise, hide empty message and show order summary
-            emptyCartMessage.classList.add('hidden');
-            orderSummary.classList.remove('hidden');
+        //     updateCartDisplay();
             
-            // Clear existing cart items
-            cartItemsContainer.innerHTML = '';
-            
-            // Calculate subtotal
-            let subtotal = 0;
-            
-            // Add each item to the cart display
-            Object.values(cartItems).forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                subtotal += itemTotal;
+        //     // Add event listener to checkout button
+        //     const checkoutBtn = document.getElementById('checkout-btn');
+        //     if (checkoutBtn) {
+        //         // Remove any existing event listeners
+        //         const newCheckoutBtn = checkoutBtn.cloneNode(true);
+        //         checkoutBtn.parentNode.replaceChild(newCheckoutBtn, checkoutBtn);
                 
-                const itemElement = document.createElement('div');
-                itemElement.className = 'py-4 flex justify-between items-center';
-                itemElement.innerHTML = `
-                    <div class="flex items-center">
-                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded mr-4">
-                        <div>
-                            <h4 class="font-semibold">${item.name}</h4>
-                            <p class="text-gray-600">Rs. ${item.price}</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center">
-                        <div class="flex items-center mr-4">
-                            <button class="decrease-quantity bg-gray-200 px-2 py-1 rounded-l" data-id="${item.id}">-</button>
-                            <span class="px-3 py-1 bg-gray-100">${item.quantity}</span>
-                            <button class="increase-quantity bg-gray-200 px-2 py-1 rounded-r" data-id="${item.id}">+</button>
-                        </div>
-                        <span class="font-medium mr-4">Rs. ${itemTotal}</span>
-                        <button class="remove-item text-red-500 hover:text-red-700" data-id="${item.id}">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                `;
+        //         newCheckoutBtn.addEventListener('click', function() {
+        //             proceedToCheckout();
+        //         });
+        //     }
+        // });
+
+        // function updateCartDisplay() {
+        //     console.log('Updating cart display...');
+        //     const cartItems = getCartItems();
+        //     console.log('Cart items:', cartItems);
+            
+        //     const cartItemsContainer = document.getElementById('cart-items');
+        //     const emptyCartMessage = document.getElementById('empty-cart-message');
+        //     const orderSummary = document.getElementById('order-summary');
+        //     const cartCount = document.getElementById('cart-count');
+        //     const mobileCartCount = document.getElementById('mobile-cart-count');
+            
+        //     // Update cart count
+        //     const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
+        //     console.log('Total items:', totalItems);
+            
+        //     cartCount.textContent = totalItems;
+        //     mobileCartCount.textContent = totalItems;
+            
+        //     // If cart is empty, show empty message and hide order summary
+        //     if (totalItems === 0) {
+        //         emptyCartMessage.classList.remove('hidden');
+        //         orderSummary.classList.add('hidden');
+        //         cartItemsContainer.innerHTML = ''; // Clear cart items
+        //         return;
+        //     }
+            
+        //     // Otherwise, hide empty message and show order summary
+        //     emptyCartMessage.classList.add('hidden');
+        //     orderSummary.classList.remove('hidden');
+            
+        //     // Clear existing cart items
+        //     cartItemsContainer.innerHTML = '';
+            
+        //     // Calculate subtotal
+        //     let subtotal = 0;
+            
+        //     // Add each item to the cart display
+        //     cartItems.forEach((item, index) => {
+        //         const itemTotal = item.price * item.quantity;
+        //         subtotal += itemTotal;
                 
-                cartItemsContainer.appendChild(itemElement);
-            });
+        //         const itemElement = document.createElement('div');
+        //         itemElement.className = 'py-4 flex justify-between items-center';
+        //         itemElement.innerHTML = `
+        //             <div class="flex items-center">
+        //                 <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded mr-4">
+        //                 <div>
+        //                     <h4 class="font-semibold">${item.name}</h4>
+        //                     <p class="text-gray-600">Rs. ${item.price}</p>
+        //                 </div>
+        //             </div>
+        //             <div class="flex items-center">
+        //                 <div class="flex items-center mr-4">
+        //                     <button id="decrease-${index}" class="bg-gray-200 px-2 py-1 rounded-l">-</button>
+        //                     <span class="px-3 py-1 bg-gray-100">${item.quantity}</span>
+        //                     <button id="increase-${index}" class="bg-gray-200 px-2 py-1 rounded-r">+</button>
+        //                 </div>
+        //                 <span class="font-medium mr-4">Rs. ${itemTotal}</span>
+        //                 <button id="remove-${index}" class="text-red-500 hover:text-red-700">
+        //                     <i class="fas fa-trash"></i>
+        //                 </button>
+        //             </div>
+        //         `;
+                
+        //         cartItemsContainer.appendChild(itemElement);
+                
+        //         // Add event listeners directly to each button with a setTimeout to ensure DOM is ready
+        //         setTimeout(() => {
+        //             document.getElementById(`decrease-${index}`).addEventListener('click', function() {
+        //                 decreaseQuantity(index);
+        //             });
+                    
+        //             document.getElementById(`increase-${index}`).addEventListener('click', function() {
+        //                 increaseQuantity(index);
+        //             });
+                    
+        //             document.getElementById(`remove-${index}`).addEventListener('click', function() {
+        //                 removeFromCart(index);
+        //             });
+        //         }, 0);
+        //     });
             
-            // Add event listeners for quantity buttons and remove buttons
-            document.querySelectorAll('.decrease-quantity').forEach(button => {
-                button.addEventListener('click', function() {
-                    const id = this.getAttribute('data-id');
-                    decreaseQuantity(id);
-                    updateCartDisplay();
-                });
-            });
+        //     // Update subtotal and total
+        //     const deliveryCharge = 150; // Set delivery charge to Rs. 150
+        //     document.getElementById('subtotal').textContent = `Rs. ${subtotal}`;
+        //     document.getElementById('total').textContent = `Rs. ${subtotal + deliveryCharge}`; // Adding delivery fee
+        // }
+
+        // function getCartItems() {
+        //     // Get cart from localStorage
+        //     const cartJson = localStorage.getItem('cart');
+        //     console.log('Raw cart data from localStorage:', cartJson);
+        //     return JSON.parse(cartJson || '[]');
+        // }
+
+        // function increaseQuantity(index) {
+        //     console.log('Increasing quantity for index:', index);
+        //     const cartItems = getCartItems();
+        //     if (cartItems[index]) {
+        //         cartItems[index].quantity += 1;
+        //         localStorage.setItem('cart', JSON.stringify(cartItems));
+        //         console.log('Updated cart after increase:', cartItems);
+        //         updateCartDisplay();
+        //     }
+        // }
+
+        // function decreaseQuantity(index) {
+        //     console.log('Decreasing quantity for index:', index);
+        //     const cartItems = getCartItems();
+        //     if (cartItems[index]) {
+        //         cartItems[index].quantity -= 1;
+        //         if (cartItems[index].quantity <= 0) {
+        //             removeFromCart(index);
+        //         } else {
+        //             localStorage.setItem('cart', JSON.stringify(cartItems));
+        //             console.log('Updated cart after decrease:', cartItems);
+        //             updateCartDisplay();
+        //         }
+        //     }
+        // }
+
+        // function removeFromCart(index) {
+        //     console.log('Removing item at index:', index);
+        //     const cartItems = getCartItems();
+        //     if (cartItems[index]) {
+        //         cartItems.splice(index, 1);
+        //         localStorage.setItem('cart', JSON.stringify(cartItems));
+        //         console.log('Updated cart after remove:', cartItems);
+        //         updateCartDisplay();
+        //     }
+        // }
+
+        // function proceedToCheckout() {
+        //     // Save cart data for the checkout page
+        //     const cartItems = getCartItems();
+        //     const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+        //     const checkoutData = {
+        //         items: cartItems,
+        //         subtotal: subtotal,
+        //         deliveryCharge: 150,
+        //         total: subtotal + 150
+        //     };
+        //     localStorage.setItem('checkoutData', JSON.stringify(checkoutData));
             
-            document.querySelectorAll('.increase-quantity').forEach(button => {
-                button.addEventListener('click', function() {
-                    const id = this.getAttribute('data-id');
-                    increaseQuantity(id);
-                    updateCartDisplay();
-                });
-            });
-            
-            document.querySelectorAll('.remove-item').forEach(button => {
-                button.addEventListener('click', function() {
-                    const id = this.getAttribute('data-id');
-                    removeFromCart(id);
-                    updateCartDisplay();
-                });
-            });
-            
-            // Update subtotal and total
-            const deliveryCharge = 0; // Set delivery charge to Rs. 0
-            document.getElementById('subtotal').textContent = `Rs. ${subtotal}`;
-            document.getElementById('total').textContent = `Rs. ${subtotal + deliveryCharge}`; // Adding delivery fee
-        }
-
-        function getCartItems() {
-            const cartItems = localStorage.getItem('cartItems');
-            return cartItems ? JSON.parse(cartItems) : {};
-        }
-
-        function increaseQuantity(id) {
-            const cartItems = getCartItems();
-            if (cartItems[id]) {
-                cartItems[id].quantity += 1;
-                localStorage.setItem('cartItems', JSON.stringify(cartItems));
-            }
-        }
-
-        function decreaseQuantity(id) {
-            const cartItems = getCartItems();
-            if (cartItems[id]) {
-                cartItems[id].quantity -= 1;
-                if (cartItems[id].quantity <= 0) {
-                    removeFromCart(id);
-                } else {
-                    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-                }
-            }
-        }
-
-        function removeFromCart(id) {
-            const cartItems = getCartItems();
-            if (cartItems[id]) {
-                delete cartItems[id];
-                localStorage.setItem('cartItems', JSON.stringify(cartItems));
-            }
-        }
-
-        // Checkout button functionality
-        document.getElementById('checkout-btn').addEventListener('click', function() {
-            // Save cart data for the checkout page
-            const cartItems = getCartItems();
-            const subtotal = Object.values(cartItems).reduce((total, item) => total + (item.price * item.quantity), 0);
-            const checkoutData = {
-                items: cartItems,
-                subtotal: subtotal,
-                deliveryCharge: 50,
-                total: subtotal + 50
-            };
-            localStorage.setItem('checkoutData', JSON.stringify(checkoutData));
-            
-            // Redirect to checkout page
-            window.location.href = 'checkout.html';
-        });
-    </script>
+        //     // Redirect to checkout page
+        //     window.location.href = 'checkout.html';
+        // }
+   
+   </script>
 </body>
 </html>

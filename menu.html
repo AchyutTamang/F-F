@@ -2092,30 +2092,72 @@
         }
       }
 
+      //   // Create HTML element for a menu item
+      //   function createMenuItemElement(item) {
+      //     const div = document.createElement("div");
+      //     div.className =
+      //       "menu-item bg-white rounded-lg shadow-md overflow-hidden";
+      //     // div.setAttribute("data-aos", "fade-up");
+
+      //     div.innerHTML = `
+      //       <img src="${item.image}" alt="${item.name}" class="w-full h-48 object-cover">
+      //       <div class="p-4">
+      //         <div class="flex justify-between items-center mb-2">
+      //           <h4 class="text-lg font-semibold">${item.name}</h4>
+      //           <span class="font-semibold">Rs. ${item.price}</span>
+      //         </div>
+      //         <div class="flex space-x-2 mt-4">
+      //           <button class="order-now-btn bg-accent text-white px-4 py-2 rounded text-sm font-medium flex-1 text-center" data-id="${item.id}">
+      //             Order Now
+      //           </button>
+      //           <button class="add-to-cart-btn bg-primary text-white px-4 py-2 rounded text-sm font-medium flex-1 text-center" data-id="${item.id}">
+      //             Add to Cart
+      //           </button>
+      //         </div>
+      //       </div>
+      //     `;
+
+      //     // Add event listeners to buttons
+      //     const addToCartBtn = div.querySelector(".add-to-cart-btn");
+      //     const orderNowBtn = div.querySelector(".order-now-btn");
+
+      //     addToCartBtn.addEventListener("click", () => {
+      //       addToCart(item.id, item.name, item.price, item.image);
+      //       showNotification(`${item.name} added to cart!`);
+      //       updateCartCount();
+      //     });
+
+      //     orderNowBtn.addEventListener("click", () => {
+      //       addToCart(item.id, item.name, item.price, item.image);
+      //       window.location.href = "cart.html";
+      //     });
+
+      //     return div;
+      //   }
+
       // Create HTML element for a menu item
       function createMenuItemElement(item) {
         const div = document.createElement("div");
         div.className =
           "menu-item bg-white rounded-lg shadow-md overflow-hidden";
-        div.setAttribute("data-aos", "fade-up");
 
         div.innerHTML = `
-          <img src="${item.image}" alt="${item.name}" class="w-full h-48 object-cover">
-          <div class="p-4">
-            <div class="flex justify-between items-center mb-2">
-              <h4 class="text-lg font-semibold">${item.name}</h4>
-              <span class="font-semibold">Rs. ${item.price}</span>
-            </div>
-            <div class="flex space-x-2 mt-4">
-              <button class="order-now-btn bg-accent text-white px-4 py-2 rounded text-sm font-medium flex-1 text-center" data-id="${item.id}">
-                Order Now
-              </button>
-              <button class="add-to-cart-btn bg-primary text-white px-4 py-2 rounded text-sm font-medium flex-1 text-center" data-id="${item.id}">
-                Add to Cart
-              </button>
-            </div>
-          </div>
-        `;
+    <img src="${item.image}" alt="${item.name}" class="w-full h-48 object-cover">
+    <div class="p-4">
+      <div class="flex justify-between items-center mb-2">
+        <h4 class="text-lg font-semibold">${item.name}</h4>
+        <span class="font-semibold">Rs. ${item.price}</span>
+      </div>
+      <div class="flex space-x-2 mt-4">
+        <button class="order-now-btn bg-accent text-white px-4 py-2 rounded text-sm font-medium flex-1 text-center" data-id="${item.id}">
+          Order Now
+        </button>
+        <button class="add-to-cart-btn bg-primary text-white px-4 py-2 rounded text-sm font-medium flex-1 text-center" data-id="${item.id}">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  `;
 
         // Add event listeners to buttons
         const addToCartBtn = div.querySelector(".add-to-cart-btn");
@@ -2133,6 +2175,46 @@
         });
 
         return div;
+      }
+
+      // Function to store items in local storage
+      function addToCart(id, name, price, image) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        // Check if item is already in cart to prevent duplicates
+        const existingItem = cart.find((item) => item.id === id);
+        if (existingItem) {
+          return;
+        }
+
+        cart.push({ id, name, price, image });
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+      }
+
+      // Function to retrieve cart items from local storage
+      function getCartItems() {
+        return JSON.parse(localStorage.getItem("cart")) || [];
+      }
+
+      // Function to remove an item from the cart in local storage
+      function removeFromCart(id) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        cart = cart.filter((item) => item.id !== id);
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+      }
+
+      // Function to update the cart count display
+      function updateCartCount() {
+        const cart = getCartItems();
+        document.querySelector("#cart-count").innerText = cart.length;
+      }
+
+      // Function to show a notification (example)
+      function showNotification(message) {
+        alert(message);
       }
 
       // Cart functionality

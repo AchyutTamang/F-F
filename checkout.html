@@ -32,6 +32,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- EmailJS Library -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // Initialize EmailJS with your public key
+            emailjs.init("YOUR_PUBLIC_KEY");
+        })();
+    </script>
     <style>
         .header-bg {
             background-color: rgba(255, 249, 234, 0.85);
@@ -132,7 +140,7 @@
                         </div>
                         <div class="flex justify-between">
                             <span class="text-gray-600">Delivery Fee</span>
-                            <span id="checkout-delivery" class="font-medium">Rs. 0</span>
+                            <span id="checkout-delivery" class="font-medium">Rs. 150</span>
                         </div>
                         <div class="border-t border-gray-200 pt-2 mt-2">
                             <div class="flex justify-between font-semibold">
@@ -322,20 +330,55 @@
                     return;
                 }
                 
-                // Show success modal
-                document.getElementById('success-modal').classList.remove('hidden');
+                // Get form data
+                const fullName = document.getElementById('fullname').value;
+                const email = document.getElementById('email').value;
+                const address = document.getElementById('address').value;
+                const notes = document.getElementById('notes').value;
                 
-                // Clear cart after successful order
-                localStorage.removeItem('cartItems');
-                localStorage.removeItem('checkoutData');
+                // Get checkout data
+                const checkoutData = JSON.parse(localStorage.getItem('checkoutData'));
                 
-                // Update cart count
-                updateCartCount();
+                // Prepare email content for EmailJS template
+                const templateParams = {
+                    to_name: 'Admin',
+                    from_name: fullName,
+                    reply_to: email,
+                    phone_number: phoneNumber,
+                    address: address,
+                    notes: notes || 'None',
+                    order_items: Object.values(checkoutData.items).map(item => 
+                        `${item.name} (${item.quantity} x Rs. ${item.price}) = Rs. ${item.price * item.quantity}`
+                    ).join('<br>'),
+                    subtotal: `Rs. ${checkoutData.subtotal}`,
+                    delivery_fee: 'Rs. 150',
+                    total: `Rs. ${checkoutData.subtotal + 150}`
+                };
                 
-                // Redirect to home page after 5 seconds
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 5000);
+                // Send email using EmailJS
+                emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+                .then(function(response) {
+                    console.log('Email sent successfully:', response);
+                    
+                    // Show success modal
+                    document.getElementById('success-modal').classList.remove('hidden');
+                    
+                    // Clear cart after successful order
+                    localStorage.removeItem('cartItems');
+                    localStorage.removeItem('checkoutData');
+                    
+                    // Update cart count
+                    updateCartCount();
+                    
+                    // Redirect to home page after 5 seconds
+                    setTimeout(() => {
+                        window.location.href = "index.html";
+                    }, 5000);
+                })
+                .catch(function(error) {
+                    console.error('Email sending failed:', error);
+                    alert('There was an error processing your order. Please try again.');
+                });
             });
         });
         
@@ -361,7 +404,7 @@
             
             if (!checkoutData) {
                 // Set default values if no checkout data
-                document.getElementById('checkout-delivery').textContent = 'Rs. 0';
+                document.getElementById('checkout-delivery').textContent = 'Rs. 150';
                 document.getElementById('checkout-total').textContent = 'Rs. 0';
                 return;
             }
@@ -393,12 +436,12 @@
             // Update order summary
             document.getElementById('checkout-subtotal').textContent = `Rs. ${data.subtotal}`;
             
-            // Set delivery charge to 0
-            const deliveryCharge = 0;
+            // Set delivery charge to 150
+            const deliveryCharge = 150;
             document.getElementById('checkout-delivery').textContent = `Rs. ${deliveryCharge}`;
             
-            // Calculate total (subtotal only, no delivery charge)
-            const total = data.subtotal;
+            // Calculate total (subtotal + delivery charge)
+            const total = data.subtotal + deliveryCharge;
             document.getElementById('checkout-total').textContent = `Rs. ${total}`;
         }
     </script>
