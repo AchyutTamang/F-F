@@ -166,7 +166,7 @@
               class="nav-link text-dark hover:text-primary transition-colors duration-300"
               >Menu</a
             >
-             <a
+            <a
               href="menu.html"
               class="nav-link text-dark hover:text-primary transition-colors duration-300"
               >All Menu</a
@@ -227,7 +227,6 @@
             >Menu</a
           >
 
-           
           <div class="flex items-center justify-between mt-4">
             <a href="cart.html" class="text-dark hover:text-primary relative">
               <i class="fas fa-shopping-cart text-lg"></i>
@@ -1004,9 +1003,7 @@
         </div>
 
         <div class="border-t border-gray-700 pt-6 text-center">
-          <p class="text-gray-400">
-            F&F Coffee Hub
-          </p>
+          <p class="text-gray-400">F&F Coffee Hub</p>
         </div>
       </div>
     </footer>
@@ -1170,7 +1167,7 @@
 
       // Cart functionality
       function getCartItems() {
-        const cartItems = localStorage.getItem("cartItems");
+        const cartItems = localStorage.getItem("cart");
         return cartItems ? JSON.parse(cartItems) : {};
       }
 
@@ -1189,7 +1186,7 @@
           };
         }
 
-        localStorage.setItem("cartItems", JSON.stringify(cartItems));
+        localStorage.setItem("cart", JSON.stringify(cartItems));
         updateCartCount();
       }
 

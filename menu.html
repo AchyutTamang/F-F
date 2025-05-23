@@ -2169,10 +2169,11 @@
           updateCartCount();
         });
 
-        orderNowBtn.addEventListener("click", () => {
-          addToCart(item.id, item.name, item.price, item.image);
-          window.location.href = "cart.html";
-        });
+        // addToCartBtn.addEventListener("click", () => {
+        //   addToCart(item.id, item.name, item.price, item.image);
+        //   showNotification(`${item.name} added to cart!`);
+        //   updateCartCount();
+        // });
 
         return div;
       }
