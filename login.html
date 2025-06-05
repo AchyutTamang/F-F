@@ -1,0 +1,19 @@
+<!-- public/login.html -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Admin Login</title>
+<link rel="stylesheet" href="styles.css" /> <!-- if you have some CSS -->
+</head>
+<body>
+<h2>Admin Login</h2>
+<form id="loginForm" method="POST" action="/api/login">
+<label>Email: <input type="email" name="email" required></label><br>
+<label>Password: <input type="password" name="password" required></label><br>
+<button type="submit">Login</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!-- public/admin.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Panel - Manage Menu</title>
+  <style>
+    /* basic styles for table and form */
+    table { width: 100%; border-collapse: collapse; margin-bottom: 1em; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #f4f4f4; }
+    form { margin-top: 1em; }
+    label { margin-right: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Menu Items</h1>
+  <button onclick="logout()">Logout</button>
+  <table id="menuTable">
+    <thead>
+      <tr><th>Name</th><th>Price</th><th>Category</th><th>Image URL</th><th>Actions</th></tr>
+    </thead>
+    <tbody id="menuBody">
+      <!-- rows will be populated by JavaScript -->
+    </tbody>
+  </table>
+
+  <h2>Add New Item</h2>
+  <form id="addItemForm">
+    <label>Name: <input type="text" name="name" required></label>
+    <label>Price: <input type="number" name="price" required></label>
+    <label>Category: <input type="text" name="category" required></label>
+    <label>Image URL: <input type="url" name="imageUrl"></label>
+    <button type="submit">Add Item</button>
+  </form>
+
+  <script>
+    // Function to fetch and display all menu items
+    async function loadMenuItems() {
+      const res = await fetch('/api/menu-items');
+      if (res.ok) {
+        const items = await res.json();
+        const tbody = document.getElementById('menuBody');
+        tbody.innerHTML = '';  // clear table
+        items.forEach(item => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.price}</td>
+            <td>${item.category}</td>
+            <td><a href="${item.imageUrl}" target="_blank">Image</a></td>
+            <td>
+              <button onclick="deleteItem('${item._id}')">Delete</button>
+            </td>
+          `;
+          // (For editing, you could add an "Edit" button that prefills a form or opens a modal.)
+          tbody.appendChild(row);
+        });
+      } else if (res.status === 401) {
+        // Session expired or not authorized
+        alert('Session expired. Please log in again.');
+        window.location = '/login.html';
+      } else {
+        console.error('Failed to load items:', res.status);
+      }
+    }
+
+    // Call loadMenuItems on page load
+    loadMenuItems();
+
+    // Handle the Add Item form submission
+    document.getElementById('addItemForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+      const res = await fetch('/api/menu-items', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (res.ok) {
+        // Item added, reload the list
+        loadMenuItems();
+        this.reset();
+      } else {
+        alert('Failed to add item');
+      }
+    });
+
+    // Delete item by ID
+    async function deleteItem(itemId) {
+      if (!confirm('Are you sure you want to delete this item?')) return;
+      const res = await fetch('/api/menu-items/' + itemId, { method: 'DELETE' });
+      if (res.ok) {
+        loadMenuItems();
+      } else {
+        alert('Failed to delete item');
+      }
+    }
+
+    // Logout the admin
+    async function logout() {
+      await fetch('/api/logout', { method: 'POST' });
+      window.location = '/login.html';
+    }
+  </script>
+</body>
+</html>
