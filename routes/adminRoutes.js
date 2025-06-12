@@ -11,6 +11,8 @@ const {
   createItem,
   updateItem,
   deleteItem,
+  deleteMerch,
+  deleteCategory,
   getItem,
   createItemCategory,
   createMerch,
@@ -36,6 +38,11 @@ router.get("/", protect, (req, res) => {
 // Dashboard
 router.get("/dashboard", protect, adminController.getDashboard);
 router.get("/dashboard/merch", protect, adminController.getDashboardMerch);
+router.get(
+  "/dashboard/category",
+  protect,
+  adminController.getDashboardCategory
+);
 
 // Item CRUD Routes
 router.get("/items/new", protect, (req, res) => {
@@ -75,10 +82,10 @@ router.post(
 router.post("/items/category", protect, createItemCategory);
 
 // Get item for editing
-router.get("/items/:id/edit", protect, async (req, res) => {
+router.get("/items/:id/edit/:category", protect, async (req, res) => {
   try {
     console.log("item id: ", req.params.id);
-    const item = await getItem(req.params.id);
+    const item = await getItem(req.params.id, req.params.category);
     if (!item) {
       console.log("item not found");
 
@@ -109,6 +116,8 @@ router.put(
 
 // Delete item and its S3 image
 router.delete("/items/:id", protect, deleteItem);
+router.delete("/merch/:id", protect, deleteMerch);
+router.delete("/category/:id", protect, deleteCategory);
 
 // Error handler for this router
 router.use((error, req, res, next) => {

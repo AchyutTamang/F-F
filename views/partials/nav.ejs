@@ -27,7 +27,6 @@
           </a>
         </div>
 
-        <% if (!isAdmin) { %>
           <a href="/merch" class="nav-link text-dark hover:text-primary transition-colors">Merch</a>
           <a href="/#about" class="nav-link text-dark hover:text-primary transition-colors">About Us</a>
           <!-- Cart Icon -->
@@ -41,16 +40,6 @@
           <!-- Contact Us Button -->
           <a href="/#contact"
              class="bg-accent hover:bg-accent/90 text-white px-6 py-2 rounded-full text-sm font-medium transition-colors">Contact Us</a>
-        <% } else { %>
-          <a href="/admin/dashboard" 
-             class="nav-link <%= path === '/admin/dashboard' ? 'text-primary font-semibold' : 'text-dark hover:text-primary transition-colors' %>">
-            Dashboard
-          </a>
-          <a href="/admin/logout" 
-             class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-full text-sm font-medium transition-colors">
-            Logout
-          </a>
-        <% } %>
       </div>
 
       <!-- Mobile Menu Button -->
@@ -75,7 +64,6 @@
         
       </div>
 
-      <% if (!isAdmin) { %>
         <a href="/#about" class="block py-2 text-dark hover:text-primary nav-link">About Us</a>
         
         <div class="flex items-center justify-between mt-4">
@@ -91,16 +79,6 @@
             Contact Us
           </a>
         </div>
-      <% } else { %>
-        <a href="/admin/dashboard" 
-           class="block py-2 text-dark hover:text-primary nav-link <%= path === '/admin/dashboard' ? 'text-primary font-semibold' : '' %>">
-          Dashboard
-        </a>
-        <a href="/admin/logout"
-           class="block py-2 text-red-500 hover:text-red-600 nav-link">
-          Logout
-        </a>
-      <% } %>
     </div>
     </div>
   </div>

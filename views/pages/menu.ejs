@@ -64,11 +64,15 @@
         <h3 class="text-xl font-semibold mb-2"><%= item.name %></h3>
         <p class="text-gray-600 mb-4"><%= item.description %></p>
         <div class="flex justify-between items-center mb-4">
-          <span class="text-lg font-bold">₹<%= item.price %></span>
+          <span class="text-lg font-bold">Rs. <%= item.price %></span>
           <span class="text-sm text-gray-500"><%= item.category %></span>
         </div>
         <!-- Add this in your menu item template -->
         <div class="flex space-x-2 mt-4">
+          <% if (!item.isAvailable) { %>
+          <span class="text-red-500">Not Available!</span>
+          <% } else { %>
+
           <button
             onclick="addToCart({id: '<%= item._id %>',
                     name: '<%= item.name %>',
@@ -80,11 +84,16 @@
             Add to Cart
           </button>
           <button
-            onclick="directCheckout('<%= item._id %>')"
+            onclick="directCheckout({id: '<%= item._id %>',
+                    name: '<%= item.name %>',
+                    price: '<%= item.price %>',
+                    image: '<%= item.image %>',
+                    quantity: 1})"
             class="bg-accent text-white px-4 py-2 rounded hover:bg-accent/90"
           >
             Order Now
           </button>
+          <% } %>
         </div>
       </div>
     </div>
@@ -160,6 +169,7 @@
     } else {
       cart.push(item);
     }
+    console.log("aaa : ", item);
 
     localStorage.setItem("cart", JSON.stringify(cart));
     updateCartCount();
@@ -230,7 +240,7 @@
     loadCategories();
     updateCartCount();
   });
-  async function directCheckout(itemId) {
+  async function directCheckout(item) {
     try {
       // Clear the existing cart
       localStorage.setItem("cart", "[]");
@@ -241,26 +251,22 @@
       ).find((div) => {
         const addToCartBtn = div.querySelector("button");
         return (
-          addToCartBtn && addToCartBtn.getAttribute("onclick").includes(itemId)
+          addToCartBtn && addToCartBtn.getAttribute("onclick").includes(item.id)
         );
       });
 
       if (menuItem) {
         // Extract item details
-        const item = {
-          id: itemId,
-          name: menuItem.querySelector("h3").textContent,
-          price: parseFloat(
-            menuItem
-              .querySelector(".text-lg.font-bold")
-              .textContent.replace("₹", "")
-          ),
-          image: menuItem.querySelector("img").src,
+        const items = {
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          image: item.image,
           quantity: 1,
         };
 
         // Set the single item in cart
-        localStorage.setItem("cart", JSON.stringify([item]));
+        localStorage.setItem("cart", JSON.stringify([items]));
 
         // Update cart count display
         updateCartCount();

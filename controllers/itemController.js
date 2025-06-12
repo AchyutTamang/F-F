@@ -3,6 +3,7 @@ const MenuItemCategory = require("../models/Category");
 const Merch = require("../models/Merch");
 const { DeleteObjectCommand } = require("@aws-sdk/client-s3");
 const s3Client = require("../config/aws");
+const Category = require("../models/Category");
 
 // exports.getItems = async (req, res) => {
 //   try {
@@ -39,9 +40,24 @@ exports.getMerchs = async () => {
     return [];
   }
 };
-exports.getItem = async (id) => {
+exports.getCategories = async () => {
   try {
-    const items = await MenuItem.findById(id);
+    const items = await Category.find();
+    return JSON.parse(JSON.stringify(items));
+  } catch (error) {
+    console.log("Error fetching items:", error);
+
+    return [];
+  }
+};
+exports.getItem = async (id, category) => {
+  try {
+    let items;
+    if (category == "merch") {
+      items = await Merch.findById(id);
+    } else {
+      items = await MenuItem.findById(id);
+    }
     if (!items) {
       // req.flash("error", "Item not found");
       return res.redirect("/admin/dashboard");
@@ -226,7 +242,62 @@ exports.deleteItem = async (req, res) => {
 
     await MenuItem.findByIdAndDelete(req.params.id);
     // res.status(200).json({ message: "Item deleted successfully" });
-    res.redirect("/admin/dashboard");
+    res.json({
+      message: "Merch deleted successfully",
+      status: 200,
+    });
+  } catch (error) {
+    console.error("Error deleting item:", error);
+    res.status(500).json({
+      message: "Error deleting item",
+      error: error.message,
+    });
+  }
+};
+exports.deleteMerch = async (req, res) => {
+  try {
+    const item = await Merch.findById(req.params.id);
+    if (item && item.imageKey) {
+      // Delete image from S3 using stored key
+      try {
+        await s3Client.send(
+          new DeleteObjectCommand({
+            Bucket: process.env.AWS_BUCKET_NAME,
+            Key: item.imageKey,
+          })
+        );
+        console.log("Image deleted from S3");
+      } catch (deleteError) {
+        console.error("Error deleting image from S3:", deleteError);
+        // Continue with deletion even if S3 delete fails
+      }
+    }
+
+    await Merch.findByIdAndDelete(req.params.id);
+    // res.status(200).json({ message: "Item deleted successfully" });
+    res.json({
+      message: "Merch deleted successfully",
+      status: 200,
+    });
+  } catch (error) {
+    console.error("Error deleting item:", error);
+    res.status(500).json({
+      message: "Error deleting item",
+      error: error.message,
+    });
+  }
+};
+exports.deleteCategory = async (req, res) => {
+  try {
+    const item = await Category.findById(req.params.id);
+  
+
+    await Category.findByIdAndDelete(req.params.id);
+    // res.status(200).json({ message: "Item deleted successfully" });
+    res.json({
+      message: "Merch deleted successfully",
+      status: 200,
+    });
   } catch (error) {
     console.error("Error deleting item:", error);
     res.status(500).json({

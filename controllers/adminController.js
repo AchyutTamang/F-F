@@ -154,6 +154,7 @@ exports.getDashboard = async (req, res) => {
       totalProducts,
       popularItems,
       items,
+      isCategory: false,
       // Add monthly comparison (you can implement actual logic later)
       // monthlyChange: {
       //   items: 12,
@@ -191,6 +192,47 @@ exports.getDashboardMerch = async (req, res) => {
       totalProducts,
       popularItems,
       items,
+      isCategory: false,
+      // Add monthly comparison (you can implement actual logic later)
+      // monthlyChange: {
+      //   items: 12,
+      //   categories: 0,
+      //   products: 8,
+      // },
+    });
+  } catch (error) {
+    console.error("Dashboard error:", error);
+    res.status(500).render("error", {
+      message: "Error loading dashboard",
+      error: error,
+    });
+  }
+};
+exports.getDashboardCategory = async (req, res) => {
+  try {
+    console.log("admin cat: ");
+    // Get counts for statistics
+    const totalItems = await Merch.countDocuments();
+    const totalCategories = await Category.countDocuments();
+    const totalProducts = await Merch.countDocuments();
+
+    // Get popular items
+    const popularItems = await Category.find()
+      .sort({ orderCount: -1 })
+      .limit(5);
+    const items = await itemController.getCategories();
+    // console.log("admin Merchs: ", items);
+
+    res.render("admin/dashboard", {
+      title: "Admin Dashboard",
+      path: "/admin/dashboard/category",
+      isAdmin: true,
+      totalItems,
+      totalCategories,
+      totalProducts,
+      popularItems,
+      items,
+      isCategory: true,
       // Add monthly comparison (you can implement actual logic later)
       // monthlyChange: {
       //   items: 12,
