@@ -1,0 +1,289 @@
+<%- contentFor('body') %>
+
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-8">
+    <form id="filterForm" class="space-y-4">
+      <!-- Search Bar -->
+      <div class="flex gap-4">
+        <input
+          type="text"
+          name="search"
+          placeholder="Search items..."
+          value="<%= locals.filters?.search || '' %>"
+          class="w-full p-2 border rounded"
+        />
+      </div>
+
+      <!-- Filters -->
+      <div class="flex flex-wrap gap-4">
+        <!-- Category Filter -->
+        <select name="category" class="p-2 border rounded" id="categorySelect">
+          <option value="all">All Categories</option>
+          <!-- Categories will be loaded dynamically -->
+        </select>
+
+        <!-- Price Range -->
+        <input
+          type="number"
+          name="minPrice"
+          placeholder="Min Price"
+          value="<%= locals.filters?.minPrice || '' %>"
+          class="p-2 border rounded w-32"
+        />
+        <input
+          type="number"
+          name="maxPrice"
+          placeholder="Max Price"
+          value="<%= locals.filters?.maxPrice || '' %>"
+          class="p-2 border rounded w-32"
+        />
+
+        <button
+          type="submit"
+          class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Apply Filters
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Menu Items Grid -->
+  <div
+    id="menuItemsGrid"
+    class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+  >
+    <% menuItems.forEach(item => { %>
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+      <img
+        src="<%= item.image %>"
+        alt="<%= item.name %>"
+        class="w-full h-48 object-cover"
+      />
+      <div class="p-4">
+        <h3 class="text-xl font-semibold mb-2"><%= item.name %></h3>
+        <p class="text-gray-600 mb-4"><%= item.description %></p>
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-lg font-bold">₹<%= item.price %></span>
+          <span class="text-sm text-gray-500"><%= item.category %></span>
+        </div>
+        <!-- Add this in your menu item template -->
+        <div class="flex space-x-2 mt-4">
+          <button
+            onclick="addToCart({id: '<%= item._id %>',
+                    name: '<%= item.name %>',
+                    price: '<%= item.price %>',
+                    image: '<%= item.image %>',
+                    quantity: 1})"
+            class="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90"
+          >
+            Add to Cart
+          </button>
+          <button
+            onclick="directCheckout('<%= item._id %>')"
+            class="bg-accent text-white px-4 py-2 rounded hover:bg-accent/90"
+          >
+            Order Now
+          </button>
+        </div>
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</div>
+
+<!-- Add client-side JavaScript for real-time filtering and cart functionality -->
+<script>
+  document
+    .getElementById("filterForm")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const searchParams = new URLSearchParams(formData);
+      const url = `/menu?${searchParams.toString()}`;
+
+      try {
+        const response = await fetch(url, {
+          headers: {
+            "X-Requested-With": "XMLHttpRequest",
+          },
+        });
+        const items = await response.json();
+        updateMenuItems(items);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    });
+
+  function updateMenuItems(items) {
+    const grid = document.getElementById("menuItemsGrid");
+    grid.innerHTML = items
+      .map(
+        (item) => `
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img src="${item.image}" 
+                 alt="${item.name}" 
+                 class="w-full h-48 object-cover">
+            <div class="p-4">
+                <h3 class="text-xl font-semibold mb-2">${item.name}</h3>
+                <p class="text-gray-600 mb-4">${item.description}</p>
+                <div class="flex justify-between items-center mb-4">
+                    <span class="text-lg font-bold">₹${item.price}</span>
+                    <span class="text-sm text-gray-500">${item.category}</span>
+                </div>
+                <button 
+                    onclick="addToCart({
+                        id: '${item._id}',
+                        name: '${item.name}',
+                        price: ${item.price},
+                        image: '${item.image}',
+                        quantity: 1
+                    })"
+                    class="w-full bg-primary hover:bg-primary/90 text-white py-2 px-4 rounded-md transition-colors duration-300 flex items-center justify-center gap-2">
+                    <i class="fas fa-shopping-cart"></i>
+                    Add to Cart
+                </button>
+            </div>
+        </div>
+    `
+      )
+      .join("");
+  }
+
+  // Cart functionality
+  function addToCart(item) {
+    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const existingItem = cart.find((i) => i.id === item.id);
+
+    if (existingItem) {
+      existingItem.quantity += 1;
+    } else {
+      cart.push(item);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartCount();
+    showAddToCartToast(item.name);
+  }
+  function updateCartCount() {
+    // Use the global updateCartCount function defined in head.ejs
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const cartCount = document.getElementById("cart-count");
+    const mobileCartCount = document.getElementById("mobile-cart-count");
+    if (cartCount) {
+      cartCount.textContent = totalItems;
+      cartCount.style.display = totalItems > 0 ? "flex" : "none";
+    }
+    if (mobileCartCount) {
+      mobileCartCount.textContent = totalItems;
+      mobileCartCount.style.display = totalItems > 0 ? "flex" : "none";
+    }
+  }
+
+  function showAddToCartToast(itemName) {
+    // Create toast element
+    const toast = document.createElement("div");
+    toast.className =
+      "fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-0 opacity-100 transition-all duration-300 z-50";
+    toast.textContent = `${itemName} added to cart!`;
+
+    document.body.appendChild(toast);
+
+    // Remove toast after 3 seconds
+    setTimeout(() => {
+      toast.classList.add("opacity-0", "translate-y-2");
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  }
+
+  // Fetch categories when page loads
+  async function loadCategories() {
+    try {
+      const response = await fetch("/menu/getCategories");
+      const categories = await response.json();
+      //   console.log("cato: ", categories);
+
+      const categorySelect = document.getElementById("categorySelect");
+
+      // Keep the "All Categories" option and add fetched categories
+      categorySelect.innerHTML = `
+            <option value="all">All Categories</option>
+            ${categories
+              .map(
+                (category) => `
+                <option value="${category.value}" 
+                    ${category.value}>
+                    ${category.label}
+                </option>
+            `
+              )
+              .join("")}
+        `;
+    } catch (error) {
+      console.error("Error loading categories:", error);
+    }
+  }
+
+  // Load categories when page loads
+  document.addEventListener("DOMContentLoaded", () => {
+    loadCategories();
+    updateCartCount();
+  });
+  async function directCheckout(itemId) {
+    try {
+      // Clear the existing cart
+      localStorage.setItem("cart", "[]");
+
+      // Get the item details from the menu items
+      const menuItem = Array.from(
+        document.querySelectorAll("#menuItemsGrid > div")
+      ).find((div) => {
+        const addToCartBtn = div.querySelector("button");
+        return (
+          addToCartBtn && addToCartBtn.getAttribute("onclick").includes(itemId)
+        );
+      });
+
+      if (menuItem) {
+        // Extract item details
+        const item = {
+          id: itemId,
+          name: menuItem.querySelector("h3").textContent,
+          price: parseFloat(
+            menuItem
+              .querySelector(".text-lg.font-bold")
+              .textContent.replace("₹", "")
+          ),
+          image: menuItem.querySelector("img").src,
+          quantity: 1,
+        };
+
+        // Set the single item in cart
+        localStorage.setItem("cart", JSON.stringify([item]));
+
+        // Update cart count display
+        updateCartCount();
+
+        // Redirect to cart page
+        window.location.href = "/cart";
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error processing order. Please try again.");
+    }
+  }
+</script>
+
+<!-- Toast Animation Styles -->
+<style>
+  .transform {
+    transform: translateY(0);
+  }
+  .translate-y-2 {
+    transform: translateY(0.5rem);
+  }
+  .opacity-0 {
+    opacity: 0;
+  }
+</style>

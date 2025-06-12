@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - Froth & Flavours Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <!-- Mobile Navigation Toggle -->
+    <div class="lg:hidden fixed top-0 left-0 right-0 bg-white z-50 px-4 py-3 flex justify-between items-center shadow-md">
+        <h1 class="text-xl font-bold">Admin Panel</h1>
+        <button onclick="toggleSidebar()" class="text-gray-600 hover:text-gray-900">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="fixed inset-y-0 left-0 transform -translate-x-full lg:translate-x-0 lg:w-64 bg-white shadow-lg transition-transform duration-300 ease-in-out z-40">
+        <div class="p-6">
+            <div class="flex items-center justify-between mb-8">
+                <h1 class="text-2xl font-bold">F&F Admin</h1>
+                <button onclick="toggleSidebar()" class="lg:hidden text-gray-600 hover:text-gray-900">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <nav class="space-y-4">
+                <a href="/admin/dashboard" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                    <i class="fas fa-home w-6"></i> Dashboard
+                </a>
+                <a href="/admin/orders" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                    <i class="fas fa-shopping-cart w-6"></i> Orders
+                </a>
+                <a href="/admin/items" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                    <i class="fas fa-utensils w-6"></i> Menu Items
+                </a>
+                <a href="/admin/analytics" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                    <i class="fas fa-chart-bar w-6"></i> Analytics
+                </a>
+                <a href="/admin/settings" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100">
+                    <i class="fas fa-cog w-6"></i> Settings
+                </a>
+                <a href="/admin/logout" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-gray-100 text-red-600">
+                    <i class="fas fa-sign-out-alt w-6"></i> Logout
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="lg:ml-64 min-h-screen pt-16 lg:pt-0">
+        <div class="p-6">
+            <%- body %>
+        </div>
+    </div>
+
+    <script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.classList.toggle('-translate-x-full');
+    }
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+        const sidebar = document.getElementById('sidebar');
+        const sidebarButton = document.querySelector('button[onclick="toggleSidebar()"]');
+        
+        if (!sidebar.contains(e.target) && !sidebarButton.contains(e.target) && !sidebar.classList.contains('-translate-x-full')) {
+            sidebar.classList.add('-translate-x-full');
+        }
+    });
+    </script>
+</body>
+</html>

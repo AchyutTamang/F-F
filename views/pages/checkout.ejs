@@ -1,0 +1,483 @@
+<!-- <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    loadCart();
+  });
+  function loadCart() {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const cartItemsContainer = document.getElementById("checkoutContainer");
+    const emptyCartMessage = document.getElementById("emptyCartMessage");
+    const template = document.getElementById("cartItemTemplate");
+
+    // Show/hide empty cart message
+    if (cart.length === 0) {
+      cartItemsContainer.innerHTML = "";
+      emptyCartMessage.classList.remove("hidden");
+      return;
+    }
+
+    emptyCartMessage.classList.add("hidden");
+    // cartItemsContainer.innerHTML = "";
+    console.log("cart items: ", cart);
+
+    cart.forEach((item) => {
+      const cartItem = template.content.cloneNode(true);
+
+      console.log("cart each: ", item);
+      // Set item details
+      const img = cartItem.querySelector("img");
+      img.src = item.image;
+      img.alt = item.name;
+      console.log("each: ", img);
+
+      cartItem.querySelector("h3").textContent = item.name;
+      cartItem.querySelector("p").textContent = `₹${item.price}`;
+      cartItem.querySelector(".quantity-display").textContent = item.quantity;
+
+      const itemElement = cartItem.querySelector(".cart-item");
+      itemElement.dataset.itemId = item.id;
+
+      // Add event listeners
+      itemElement
+        .querySelector(".decrease-quantity")
+        .addEventListener("click", () => updateQuantity(item.id, -1));
+      itemElement
+        .querySelector(".increase-quantity")
+        .addEventListener("click", () => updateQuantity(item.id, 1));
+      itemElement
+        .querySelector(".remove-item")
+        .addEventListener("click", () => removeItem(item.id));
+
+      cartItemsContainer.appendChild(cartItem);
+    });
+  }
+
+  const checkoutItemsContainer = document.getElementById("checkout-items");
+
+  // Clear existing items
+  checkoutItemsContainer.innerHTML = "";
+
+  // Display order items
+  Object.values(data.items).forEach((item) => {
+    const itemElement = document.createElement("div");
+    itemElement.className = "py-3 flex justify-between items-center";
+    itemElement.innerHTML = `
+                    <div class="flex items-center">
+                        <img src="${item.image}" alt="${
+      item.name
+    }" class="w-12 h-12 object-cover rounded mr-3">
+                        <div>
+                            <h4 class="font-medium">${item.name}</h4>
+                            <p class="text-sm text-gray-500">${
+                              item.quantity
+                            } × Rs. ${item.price}</p>
+                        </div>
+                    </div>
+                    <span class="font-medium">Rs. ${
+                      item.price * item.quantity
+                    }</span>
+                `;
+
+    checkoutItemsContainer.appendChild(itemElement);
+  });
+  function getCartItems() {
+    const cartItems = localStorage.getItem("cart");
+    return cartItems ? JSON.parse(cartItems) : {};
+  }
+</script> -->
+
+<section class="pt-32 pb-16 px-4">
+  <div class="container mx-auto">
+    <!-- Empty Cart Message -->
+    <div id="emptyCartMessage" class="hidden text-center py-8">
+      <p class="text-gray-500 text-lg mb-4">Your cart is empty</p>
+      <a
+        href="/menu"
+        class="inline-block bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-md transition-colors duration-300"
+      >
+        Browse Menu
+      </a>
+    </div>
+
+    <!-- Checkout Content (will be hidden when cart is empty) -->
+    <div id="checkoutContent">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-display font-bold text-dark mb-4">Checkout</h2>
+        <p class="text-gray-600 max-w-2xl mx-auto">
+          Complete your order by providing your details
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Order Summary -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+          <h3 class="text-xl font-semibold text-dark mb-4">Order Summary</h3>
+          <div id="checkout-items" class="divide-y divide-gray-200 mb-4">
+            <!-- Order items will be displayed here -->
+          </div>
+          <div class="space-y-2 mb-4 border-t border-gray-200 pt-4">
+            <div class="flex justify-between">
+              <span class="text-gray-600">Subtotal</span>
+              <span id="checkout-subtotal" class="font-medium">Rs. 0</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Delivery Fee</span>
+              <span id="checkout-delivery" class="font-medium">Rs. 150</span>
+            </div>
+            <div class="border-t border-gray-200 pt-2 mt-2">
+              <div class="flex justify-between font-semibold">
+                <span>Total</span>
+                <span id="checkout-total" class="text-primary">Rs. 0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Customer Information Form -->
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <h3 class="text-xl font-semibold text-dark mb-4">
+            Customer Information
+          </h3>
+          <form id="checkout-form" class="space-y-4">
+            <div>
+              <label for="fullname" class="block text-gray-700 mb-1"
+                >Full Name</label
+              >
+              <input
+                type="text"
+                id="fullname"
+                name="fullname"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label for="email" class="block text-gray-700 mb-1"
+                >Email Address</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label for="phone" class="block text-gray-700 mb-1"
+                >Phone Number</label
+              >
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label for="address" class="block text-gray-700 mb-1"
+                >Delivery Address</label
+              >
+              <textarea
+                id="address"
+                name="address"
+                required
+                rows="3"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              ></textarea>
+            </div>
+            <div>
+              <label for="notes" class="block text-gray-700 mb-1"
+                >Order Notes (Optional)</label
+              >
+              <textarea
+                id="notes"
+                name="notes"
+                rows="2"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+              ></textarea>
+            </div>
+            <div class="pt-4">
+              <button
+                type="submit"
+                class="w-full bg-accent hover:bg-accent/90 text-white py-3 rounded-md font-medium transition-colors duration-300"
+              >
+                Complete Order
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  mobileMenuButton.addEventListener("click", () => {
+    mobileMenu.classList.toggle("hidden");
+  });
+
+  // Cart functionality
+  document.addEventListener("DOMContentLoaded", function () {
+    // Load checkout data
+    loadCheckoutData();
+    // Update cart count
+    updateCartCount();
+
+    // Add phone number validation
+    const phoneInput = document.getElementById("phone");
+    phoneInput.addEventListener("input", function (e) {
+      // Remove any non-digit characters
+      this.value = this.value.replace(/\D/g, "");
+
+      // Limit to 10 digits
+      if (this.value.length > 10) {
+        this.value = this.value.slice(0, 10);
+      }
+    });
+
+    function showAlertToast(itemName) {
+      // Create toast element
+      const toast = document.createElement("div");
+      toast.className =
+        "fixed bottom-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg transform translate-y-0 opacity-100 transition-all duration-300 z-50";
+      toast.textContent = `${itemName}`;
+
+      document.body.appendChild(toast);
+
+      // Remove toast after 3 seconds
+      setTimeout(() => {
+        toast.classList.add("opacity-0", "translate-y-2");
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Handle form submission
+    document
+      .getElementById("checkout-form")
+      .addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        // Validate phone number
+        const phoneNumber = document.getElementById("phone").value;
+        if (phoneNumber.length !== 10) {
+          showAlertToast("Please enter a valid 10-digit phone number");
+          //   alert("Please enter a valid 10-digit phone number");
+          return;
+        }
+
+        // Get form data
+        const fullName = document.getElementById("fullname").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const address = document.getElementById("address").value;
+        const notes = document.getElementById("notes").value;
+
+        // Get checkout data
+        const checkoutData = JSON.parse(localStorage.getItem("checkoutData"));
+
+        console.log("items to be: ", checkoutData);
+
+        // Generate a random order ID
+        const orderId = Math.floor(Math.random() * 10000) + 1000;
+
+        // Prepare email content for EmailJS template
+        // Using Service ID: service_6wjj7w5, Template ID: pjkjn7i, Public Key: EeboP7lB7HoGRom_T
+        // Parameters strictly match variables used in the provided EmailJS template HTML
+        const templateParams = {
+          order_id: orderId, // Matches {{order_id}}
+          email: email, // Matches {{email}}
+          phone: phone, // Matches {{phone}}
+          address: address, // Matches {{address}}
+          notes: notes, // Matches {{notes}}
+          to_name: fullName, // Added back common parameter
+          from_name: "F&F Coffee Hub", // Added back common parameter
+          reply_to: "frothandflavours@gmail.com", // Added back common parameter
+          orders: Object.values(checkoutData.items).map((item) => ({
+            // Matches {{#orders}} loop
+            name: item.name, // Matches {{name}}
+            units: item.quantity, // Matches {{units}}
+            price: item.price, // Matches {{price}}
+            image_url: item.image, // Matches {{image_url}}
+          })),
+          cost: {
+            // Matches {{cost}} object
+            shipping: 150, // Matches {{cost.shipping}}
+            tax: 0, // Matches {{cost.tax}}
+            total: checkoutData.subtotal, // Matches {{cost.total}}
+          },
+          // Removed attachment attempt as client-side path is not the correct method for CID embedding
+        };
+
+        // Log template parameters before sending
+        console.log("EmailJS Template Parameters:", templateParams);
+
+        // Show loading state
+        const submitButton = this.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton.innerHTML;
+        submitButton.innerHTML =
+          '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+        submitButton.disabled = true;
+
+        // Send email using EmailJS
+        emailjs
+          .send("service_6wjj7w5", "template_5zp82oj", templateParams) // Send to customer
+          .then(function (response) {
+            console.log("Customer email sent successfully:", response);
+
+            // Send second email to admin
+            return emailjs.send(
+              "service_6wjj7w5",
+              "template_xrdctws",
+              templateParams
+            );
+          })
+          .then(function (response) {
+            console.log("Admin email sent successfully:", response);
+
+            // Show success modal
+            document.getElementById("success-modal").classList.remove("hidden");
+
+            // Clear cart after successful order
+            localStorage.removeItem("cart");
+            localStorage.removeItem("checkoutData");
+            localStorage.removeItem("checkoutExpiry");
+
+            // Update cart count
+            updateCartCount();
+            submitButton.style.backgroundColor = "#28a745";
+            submitButton.innerHTML = '<i class="fas fa-check mr-2"></i> Done';
+            // Redirect to home page after 5 seconds
+            setTimeout(() => {
+              window.location.href = "/";
+            }, 5000);
+          })
+          .catch(function (error) {
+            console.error("Email sending failed:", error);
+            console.error("EmailJS Error Details:", error);
+            showAlertToast(
+              "There was an error processing your order. Please try again."
+            );
+            // alert(
+            //   "There was an error processing your order. Please try again. Check the browser console for details."
+            // );
+
+            // Reset button state
+            submitButton.innerHTML = originalButtonText;
+            submitButton.disabled = false;
+          });
+      });
+  });
+
+  function getCartItems() {
+    const cartItems = localStorage.getItem("cart");
+    console.log("caa; ", cartItems);
+
+    return cartItems ? JSON.parse(cartItems) : {};
+  }
+
+  function updateCartCount() {
+    const cartItems = getCartItems();
+    const totalItems = Object.values(cartItems).reduce(
+      (total, item) => total + item.quantity,
+      0
+    );
+
+    // Update cart count in the header
+    const cartCount = document.getElementById("cart-count");
+    const mobileCartCount = document.getElementById("mobile-cart-count");
+
+    if (cartCount) cartCount.textContent = totalItems;
+    if (mobileCartCount) mobileCartCount.textContent = totalItems;
+  }
+
+  function loadCheckoutData() {
+    const checkoutData = localStorage.getItem("checkoutData");
+
+    if (!checkoutData) {
+      // Set default values if no checkout data
+      document.getElementById("checkout-delivery").textContent = "Rs. 150";
+      document.getElementById("checkout-total").textContent = "Rs. 0";
+      return;
+    }
+
+    const data = JSON.parse(checkoutData);
+    const checkoutItemsContainer = document.getElementById("checkout-items");
+
+    // Clear existing items
+    checkoutItemsContainer.innerHTML = "";
+
+    // Display order items
+    let items = getCartItems();
+    console.log("in naya: ", items);
+
+    Object.values(items).forEach((item) => {
+      const itemElement = document.createElement("div");
+      itemElement.className = "py-3 flex justify-between items-center";
+      itemElement.innerHTML = `
+                  <div class="flex items-center">
+                      <img src="${item.image}" alt="${
+        item.name
+      }" class="w-12 h-12 object-cover rounded mr-3">
+                      <div>
+                          <h4 class="font-medium">${item.name}</h4>
+                          <p class="text-sm text-gray-500">${
+                            item.quantity
+                          } × Rs. ${item.price}</p>
+                      </div>
+                  </div>
+                  <span class="font-medium">Rs. ${
+                    item.price * item.quantity
+                  }</span>
+              `;
+
+      checkoutItemsContainer.appendChild(itemElement);
+    });
+
+    // Update order summary
+    document.getElementById(
+      "checkout-subtotal"
+    ).textContent = `Rs. ${data.subtotal}`;
+
+    // Set delivery charge to 150
+    const deliveryCharge = 150;
+    document.getElementById(
+      "checkout-delivery"
+    ).textContent = `Rs. ${deliveryCharge}`;
+
+    // Calculate total (subtotal + delivery charge)
+    const total = data.subtotal + deliveryCharge;
+    document.getElementById("checkout-total").textContent = `Rs. ${total}`;
+  }
+</script>
+<script
+  type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"
+></script>
+<script type="text/javascript">
+  (function () {
+    emailjs.init("EeboP7lB7HoGRom_T");
+  })();
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const emptyCartMessage = document.getElementById("emptyCartMessage");
+    const checkoutContent = document.getElementById("checkoutContent");
+
+    // Show/hide empty cart message
+    if (cart.length === 0) {
+      emptyCartMessage.classList.remove("hidden");
+      checkoutContent.classList.add("hidden");
+    } else {
+      emptyCartMessage.classList.add("hidden");
+      checkoutContent.classList.remove("hidden");
+      loadCart(); // Your existing cart loading function
+    }
+  });
+</script>

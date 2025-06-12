@@ -1,0 +1,107 @@
+<div class="bg-white rounded-lg shadow-md p-6">
+  <h2 class="text-2xl font-bold mb-6">Orders Management</h2>
+
+  <!-- Filters -->
+  <form class="mb-6 space-y-4 md:space-y-0 md:flex md:gap-4" method="GET">
+    <select name="status" class="w-full md:w-auto px-4 py-2 border rounded">
+      <option value="all" <%= filters.status === 'all' ? 'selected' : '' %>>All Status</option>
+      <option value="pending" <%= filters.status === 'pending' ? 'selected' : '' %>>Pending</option>
+      <option value="processing" <%= filters.status === 'processing' ? 'selected' : '' %>>Processing</option>
+      <option value="completed" <%= filters.status === 'completed' ? 'selected' : '' %>>Completed</option>
+    </select>
+
+    <input 
+      type="date" 
+      name="startDate" 
+      value="<%= filters.startDate %>" 
+      class="w-full md:w-auto px-4 py-2 border rounded"
+    >
+
+    <input 
+      type="date" 
+      name="endDate" 
+      value="<%= filters.endDate %>" 
+      class="w-full md:w-auto px-4 py-2 border rounded"
+    >
+
+    <select name="sort" class="w-full md:w-auto px-4 py-2 border rounded">
+      <option value="date-desc" <%= filters.sort === 'date-desc' ? 'selected' : '' %>>Newest First</option>
+      <option value="date-asc" <%= filters.sort === 'date-asc' ? 'selected' : '' %>>Oldest First</option>
+      <option value="amount-desc" <%= filters.sort === 'amount-desc' ? 'selected' : '' %>>Amount (High to Low)</option>
+      <option value="amount-asc" <%= filters.sort === 'amount-asc' ? 'selected' : '' %>>Amount (Low to High)</option>
+    </select>
+
+    <button type="submit" class="w-full md:w-auto bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600">
+      Apply Filters
+    </button>
+  </form>
+
+  <!-- Orders List -->
+  <div class="overflow-x-auto">
+    <table class="w-full">
+      <thead class="bg-gray-50">
+        <tr>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Items</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y divide-gray-200">
+        <% orders.forEach(order => { %>
+          <tr>
+            <td class="px-6 py-4 whitespace-nowrap"><%= order._id %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= new Date(order.createdAt).toLocaleDateString() %></td>
+            <td class="px-6 py-4 whitespace-nowrap"><%= order.customerName %></td>
+            <td class="px-6 py-4">
+              <% order.items.forEach(item => { %>
+                <div><%= item.itemId.name %> x <%= item.quantity %></div>
+              <% }) %>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap">₹<%= order.totalAmount %></td>
+            <td class="px-6 py-4 whitespace-nowrap">
+              <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                <%= order.status === 'completed' ? 'bg-green-100 text-green-800' : 
+                   order.status === 'processing' ? 'bg-yellow-100 text-yellow-800' : 
+                   'bg-red-100 text-red-800' %>">                
+                <%= order.status %>
+              </span>
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+              <button onclick="updateOrderStatus('<%= order._id %>')" class="text-blue-600 hover:text-blue-900">Update Status</button>
+            </td>
+          </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+async function updateOrderStatus(orderId) {
+  const newStatus = prompt('Enter new status (pending/processing/completed):');
+  if (!newStatus) return;
+
+  try {
+    const response = await fetch(`/admin/orders/${orderId}/status`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ status: newStatus })
+    });
+
+    if (response.ok) {
+      window.location.reload();
+    } else {
+      alert('Error updating order status');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Error updating order status');
+  }
+}
+</script>

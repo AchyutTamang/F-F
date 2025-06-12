@@ -1,0 +1,740 @@
+<%- contentFor('body') %>
+
+<!-- Full-screen Hero Section -->
+<section
+  id="home"
+  class="min-h-screen flex items-center justify-center bg-light pt-20 pb-16 relative"
+  style="
+    background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');
+    background-size: cover;
+    background-position: center;
+  "
+>
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+
+  <div class="container mx-auto px-4 relative">
+    <div class="flex flex-col md:flex-row items-center">
+      <!-- Left Content -->
+      <div
+        class="w-full md:w-1/2 mb-10 md:mb-0 pr-0 md:pr-8 text-center md:text-left animate-fade-in-right"
+      >
+        <h1
+          class="text-5xl md:text-6xl lg:text-7xl font-display font-bold mb-6 leading-tight text-white"
+        >
+          F&F Coffee Hub
+        </h1>
+
+        <div class="text-lg md:text-xl text-white mb-8">
+          <p class="mb-4 font-light tracking-wide">
+            Food | Drinks | Coffee | Cold Beverages | Alcohol
+          </p>
+          <p class="font-medium">
+            Open 24/7 - Delicious, Affordable & Always Ready
+          </p>
+        </div>
+
+        <a
+          href="#menu"
+          class="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-md font-medium transition-colors duration-300 text-lg"
+        >
+          View Our Menu
+        </a>
+      </div>
+
+      <!-- Right Content - Image Grid -->
+      <div class="w-full md:w-1/2 flex justify-center animate-fade-in-left">
+        <div class="relative">
+          <div class="grid grid-cols-2 gap-4">
+            <div
+              class="hero-image overflow-hidden w-36 h-36 md:w-48 md:h-48 bg-cover bg-center rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
+              style="background-image: url('/photos/menu/coffee1.jpg')"
+            ></div>
+            <div
+              class="hero-image overflow-hidden w-36 h-36 md:w-48 md:h-48 bg-cover bg-center rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 mt-8"
+              style="background-image: url('/photos/menu/food1.jpg')"
+            ></div>
+            <div
+              class="hero-image overflow-hidden w-36 h-36 md:w-48 md:h-48 bg-cover bg-center rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 -mt-8"
+              style="background-image: url('/photos/menu/drink1.jpg')"
+            ></div>
+            <div
+              class="hero-image overflow-hidden w-36 h-36 md:w-48 md:h-48 bg-cover bg-center rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300"
+              style="background-image: url('/photos/menu/dessert1.jpg')"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Down Indicator -->
+    <!-- <div
+      class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white text-center"
+    >
+      <p class="mb-2 text-sm font-light">Scroll Down</p>
+      <i class="fas fa-chevron-down animate-bounce"></i>
+    </div> -->
+  </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-16 bg-light">
+  <div class="container mx-auto px-4">
+    <h2
+      class="text-3xl md:text-4xl font-display font-bold text-center mb-12 section-title animate-fade-in-up"
+    >
+      Why Choose Us?
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <!-- Quality -->
+      <div class="text-center p-6 animate-fade-in-up-100">
+        <div
+          class="bg-light rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center"
+        >
+          <i class="fas fa-award text-2xl text-primary"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Premium Quality</h3>
+        <p class="text-gray-600">
+          We use only the finest ingredients to ensure exceptional taste and
+          quality.
+        </p>
+      </div>
+
+      <!-- 24/7 Service -->
+      <div class="text-center p-6 animate-fade-in-up-200">
+        <div
+          class="bg-light rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center"
+        >
+          <i class="fas fa-clock text-2xl text-primary"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">24/7 Service</h3>
+        <p class="text-gray-600">
+          Always open to serve you the best food and drinks, any time of day or
+          night.
+        </p>
+      </div>
+
+      <!-- Fast Delivery -->
+      <div class="text-center p-6 animate-fade-in-up-300">
+        <div
+          class="bg-light rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center"
+        >
+          <i class="fas fa-truck text-2xl text-primary"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Fast Delivery</h3>
+        <p class="text-gray-600">
+          Quick and reliable delivery service to your doorstep.
+        </p>
+      </div>
+
+      <!-- Best Price -->
+      <div class="text-center p-6 animate-fade-in-up-400">
+        <div
+          class="bg-light rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center"
+        >
+          <i class="fas fa-tag text-2xl text-primary"></i>
+        </div>
+        <h3 class="text-xl font-semibold mb-2">Best Price</h3>
+        <p class="text-gray-600">
+          Competitive prices without compromising on quality.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Us Section -->
+<section id="about" class="py-16 px-4 bg-amber-50">
+  <div class="container mx-auto">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+      <!-- Image -->
+      <div class="relative animate-fade-in-right">
+        <img
+          src="https://fnfimagebucket.s3.ap-south-1.amazonaws.com/menu-items/logo_trans.png"
+          alt="Our Coffee Shop"
+          class="rounded-lg w-full object-cover"
+        />
+        <div
+          class="absolute -bottom-6 -right-6 w-48 h-48 bg-primary rounded-lg -z-10"
+        ></div>
+      </div>
+
+      <!-- Content -->
+      <div class="animate-fade-in-left">
+        <h2 class="text-3xl md:text-4xl font-display font-bold mb-6">
+          Our Story
+        </h2>
+        <p class="text-gray-700 mb-6">
+          At F&F Coffee Hub, we're passionate about creating memorable dining
+          experiences. Our chefs craft each dish with care, using only the
+          freshest ingredients to deliver exceptional flavors that will delight
+          your taste buds.
+        </p>
+        <p class="text-gray-700 mb-6">
+          Founded in 2020, our coffee hub has quickly become a favorite spot for
+          food lovers. We pride ourselves on our warm hospitality, cozy
+          atmosphere, and commitment to quality in every cup and plate we serve.
+        </p>
+
+        <div class="grid grid-cols-2 gap-6 mb-8">
+          <!-- Feature 1 -->
+          <div class="text-center p-4 bg-white rounded-lg shadow-md">
+            <div
+              class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3"
+            >
+              <i class="fas fa-coffee text-primary text-xl"></i>
+            </div>
+            <h4 class="font-semibold mb-2">Premium Coffee</h4>
+            <p class="text-sm text-gray-600">Finest beans, perfect roast</p>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="text-center p-4 bg-white rounded-lg shadow-md">
+            <div
+              class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3"
+            >
+              <i class="fas fa-utensils text-primary text-xl"></i>
+            </div>
+            <h4 class="font-semibold mb-2">Fresh Food</h4>
+            <p class="text-sm text-gray-600">Quality ingredients daily</p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="text-center p-4 bg-white rounded-lg shadow-md">
+            <div
+              class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3"
+            >
+              <i class="fas fa-clock text-primary text-xl"></i>
+            </div>
+            <h4 class="font-semibold mb-2">24/7 Service</h4>
+            <p class="text-sm text-gray-600">Always here for you</p>
+          </div>
+
+          <!-- Feature 4 -->
+          <div class="text-center p-4 bg-white rounded-lg shadow-md">
+            <div
+              class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3"
+            >
+              <i class="fas fa-truck text-primary text-xl"></i>
+            </div>
+            <h4 class="font-semibold mb-2">Fast Delivery</h4>
+            <p class="text-sm text-gray-600">Quick & reliable service</p>
+          </div>
+        </div>
+
+        <!-- <div class="flex items-center mb-6">
+          <div>
+            <p class="font-semibold">Contact us:</p>
+            <p class="text-gray-600">9843235566, 9847765294</p>
+          </div>
+        </div> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Menu Section -->
+<section id="menu" class="py-16 bg-amber-50">
+  <div class="container mx-auto px-4">
+    <h2
+      class="text-3xl md:text-4xl font-display font-bold text-center mb-12 section-title animate-fade-in-up"
+    >
+      Featured Menu
+    </h2>
+
+    <!-- Menu Categories -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      <!-- Category 1 -->
+      <a href="/menu?category=beverages" class="group animate-fade-in-up-100">
+        <div class="relative overflow-hidden rounded-lg shadow-lg">
+          <img
+            src="https://eskola.edu.mt/wp-content/uploads/2024/04/villeroy-boch_artesano_dekor_hot-beverages_design-05a3fd098ffc0573ca881a596b6a803c-onfpjqwuddya495rxu64g645f9ezbf97xz80z6yubk.jpg"
+            alt="Coffee"
+            class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-300"
+          />
+          <div
+            class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-all duration-300"
+          >
+            <div class="absolute bottom-0 left-0 right-0 p-6">
+              <h3 class="text-white text-2xl font-semibold">Beverages</h3>
+              <p class="text-white/80">Coffee, Tea & More</p>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Category 2 -->
+      <a href="/menu?category=food" class="group animate-fade-in-up-200">
+        <div class="relative overflow-hidden rounded-lg shadow-lg">
+          <img
+            src="https://api.luxuryholidaynepal.com/media/blog/banner/nepalese-cuisine.jpg"
+            alt="Food"
+            class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-300"
+          />
+          <div
+            class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-all duration-300"
+          >
+            <div class="absolute bottom-0 left-0 right-0 p-6">
+              <h3 class="text-white text-2xl font-semibold">Food</h3>
+              <p class="text-white/80">Delicious Meals</p>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Category 3 -->
+
+      <!-- Category 4 -->
+      <a href="/menu?category=refreshers" class="group animate-fade-in-up-400">
+        <div class="relative overflow-hidden rounded-lg shadow-lg">
+          <img
+            src="https://cdn.foodstorm.com/3da8662b65244337a9d6b218c1adae0d/images/571b3ecb0e3c4b0ab1d6723d72df48c0_1080w.jpg"
+            alt="Refreshers"
+            class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-300"
+          />
+          <div
+            class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-all duration-300"
+          >
+            <div class="absolute bottom-0 left-0 right-0 p-6">
+              <h3 class="text-white text-2xl font-semibold">Refreshers</h3>
+              <p class="text-white/80">Cool & Refreshing</p>
+            </div>
+          </div>
+        </div>
+      </a>
+      <a href="/merch" class="group animate-fade-in-up-300">
+        <div class="relative overflow-hidden rounded-lg shadow-lg">
+          <img
+            src="https://miro.medium.com/v2/resize:fit:1280/0*JgQSrR7TrCgESsW9.jpg"
+            alt="Desserts"
+            class="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-300"
+          />
+          <div
+            class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-all duration-300"
+          >
+            <div class="absolute bottom-0 left-0 right-0 p-6">
+              <h3 class="text-white text-2xl font-semibold">Merch</h3>
+              <p class="text-white/80">Shirts and Hodies</p>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- View Full Menu Button -->
+    <div class="text-center">
+      <a
+        href="/menu"
+        class="inline-block bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-md font-medium transition-colors duration-300"
+      >
+        View Full Menu
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Section -->
+<section id="how-it-works" class="py-16 bg-amber-50">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-12 animate-fade-in-up">
+      <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">
+        60 Minutes Delivery Process
+      </h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        We ensure your food reaches you hot and fresh within 60 minutes
+      </p>
+    </div>
+
+    <div class="relative">
+      <!-- Progress Bar -->
+      <div
+        class="hidden md:block h-1 bg-gray-200 absolute top-1/2 left-0 right-0 transform -translate-y-1/2 z-0"
+      ></div>
+      <div
+        id="progress-bar"
+        class="hidden md:block h-1 bg-primary absolute top-1/2 left-0 w-0 transform -translate-y-1/2 z-10 transition-all duration-1500 ease-out"
+      ></div>
+
+      <!-- Steps -->
+      <div
+        class="flex flex-col md:flex-row justify-between items-center md:items-start relative z-20"
+      >
+        <!-- Step 1 -->
+        <div
+          class="flex flex-col items-center mb-8 md:mb-0 w-full md:w-1/4 animate-fade-in-up-100"
+        >
+          <div
+            class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white mb-6 md:mb-8"
+          >
+            <i class="fas fa-utensils text-xl"></i>
+          </div>
+          <h4 class="font-semibold text-dark mb-2 text-center">
+            Order your food
+          </h4>
+          <p class="text-gray-600 text-center text-sm">
+            Choose from our wide variety of dishes
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div
+          class="flex flex-col items-center mb-8 md:mb-0 w-full md:w-1/4 animate-fade-in-up-200"
+        >
+          <div
+            class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white mb-6 md:mb-8"
+          >
+            <i class="fas fa-check text-xl"></i>
+          </div>
+          <h4 class="font-semibold text-dark mb-2 text-center">
+            We verify order
+          </h4>
+          <p class="text-gray-600 text-center text-sm">
+            We confirm your order details
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div
+          class="flex flex-col items-center mb-8 md:mb-0 w-full md:w-1/4 animate-fade-in-up-300"
+        >
+          <div
+            class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white mb-6 md:mb-8"
+          >
+            <i class="fas fa-cookie-bite text-xl"></i>
+          </div>
+          <h4 class="font-semibold text-dark mb-2 text-center">
+            Prepare food & pack
+          </h4>
+          <p class="text-gray-600 text-center text-sm">
+            Our chefs prepare your food with care
+          </p>
+        </div>
+
+        <!-- Step 4 -->
+        <div
+          class="flex flex-col items-center w-full md:w-1/4 animate-fade-in-up-400"
+        >
+          <div
+            class="w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white mb-6 md:mb-8"
+          >
+            <i class="fas fa-truck text-xl"></i>
+          </div>
+          <h4 class="font-semibold text-dark mb-2 text-center">On the way</h4>
+          <p class="text-gray-600 text-center text-sm">
+            Our delivery partner brings food to your doorstep
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<!-- <section id="contact" class="py-16 bg-white">
+  <div class="container mx-auto px-4">
+    <h2
+      class="text-3xl md:text-4xl font-display font-bold text-center mb-12 section-title animate-fade-in-up"
+    >
+      Contact Us
+    </h2>
+
+    <div class="max-w-4xl mx-auto">
+      <div class="flex flex-col md:flex-row gap-8">
+        <div class="w-full md:w-1/2 animate-fade-in-right">
+          <div class="bg-white p-8 rounded-lg shadow-lg h-full">
+            <h3 class="text-2xl font-semibold mb-6">Get in Touch</h3>
+            <div class="space-y-6">
+              <div class="flex items-start">
+                <div class="bg-primary/10 rounded-full p-3 mr-4">
+                  <i class="fas fa-map-marker-alt text-primary"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium mb-1">Our Location</h4>
+                  <p class="text-gray-600">Talchowk, Pokhara-27, Nepal</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="bg-primary/10 rounded-full p-3 mr-4">
+                  <i class="fas fa-phone-alt text-primary"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium mb-1">Phone Number</h4>
+                  <p class="text-gray-600">+977 9843235566, +977 9847765294</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="bg-primary/10 rounded-full p-3 mr-4">
+                  <i class="fas fa-envelope text-primary"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium mb-1">Email Address</h4>
+                  <p class="text-gray-600">info@ffcoffeehub.com</p>
+                </div>
+              </div>
+
+              <div class="flex items-start">
+                <div class="bg-primary/10 rounded-full p-3 mr-4">
+                  <i class="fas fa-clock text-primary"></i>
+                </div>
+                <div>
+                  <h4 class="font-medium mb-1">Opening Hours</h4>
+                  <p class="text-gray-600">Open 24/7</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8">
+              <h4 class="font-medium mb-4">Follow Us</h4>
+              <div class="flex space-x-4">
+                <a
+                  href="#"
+                  class="bg-primary/10 hover:bg-primary/20 text-primary rounded-full p-3 transition-colors duration-300"
+                >
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a
+                  href="#"
+                  class="bg-primary/10 hover:bg-primary/20 text-primary rounded-full p-3 transition-colors duration-300"
+                >
+                  <i class="fab fa-instagram"></i>
+                </a>
+                <a
+                  href="#"
+                  class="bg-primary/10 hover:bg-primary/20 text-primary rounded-full p-3 transition-colors duration-300"
+                >
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a
+                  href="#"
+                  class="bg-primary/10 hover:bg-primary/20 text-primary rounded-full p-3 transition-colors duration-300"
+                >
+                  <i class="fab fa-tiktok"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full md:w-1/2 animate-fade-in-left">
+          <form class="bg-white p-8 rounded-lg shadow-lg h-full">
+            <div class="mb-6">
+              <label for="name" class="block text-gray-700 mb-2"
+                >Your Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+
+            <div class="mb-6">
+              <label for="subject" class="block text-gray-700 mb-2"
+                >Subject</label
+              >
+              <input
+                type="text"
+                id="subject"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+
+            <div class="mb-6">
+              <label for="message" class="block text-gray-700 mb-2"
+                >Your Message</label
+              >
+              <textarea
+                id="message"
+                rows="4"
+                class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+              ></textarea>
+            </div>
+
+            <button
+              type="submit"
+              class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-md font-medium transition-colors duration-300 w-full"
+            >
+              Send Message
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<!-- Contact Us Section -->
+<section id="contact" class="py-16 px-4">
+  <div class="container mx-auto">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-display font-bold text-dark mb-4">Contact Us</h2>
+      <p class="text-gray-600 max-w-2xl mx-auto">
+        Have questions or want to place an order? Reach out to us!
+      </p>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-8">
+      <!-- Contact Information -->
+      <div class="w-full md:w-1/2 bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-semibold text-primary mb-4">Get in Touch</h3>
+
+        <div class="space-y-4">
+          <div class="flex items-start">
+            <div class="bg-primary/10 rounded-full p-3 mr-4">
+              <i class="fas fa-map-marker-alt text-primary"></i>
+            </div>
+            <div>
+              <h4 class="font-semibold">Our Location</h4>
+              <p class="text-gray-600">Talchowk, Pokhara-27, Nepal</p>
+            </div>
+          </div>
+
+          <div class="flex items-start">
+            <div class="bg-primary/10 rounded-full p-3 mr-4">
+              <i class="fas fa-phone-alt text-primary"></i>
+            </div>
+            <div>
+              <h4 class="font-semibold">Phone Number</h4>
+              <p class="text-gray-600">+977 9843235566, +977 9847765294</p>
+            </div>
+          </div>
+
+          <div class="flex items-start">
+            <div class="bg-primary/10 rounded-full p-3 mr-4">
+              <i class="fas fa-envelope text-primary"></i>
+            </div>
+            <div>
+              <h4 class="font-semibold">Email Address</h4>
+              <p class="text-gray-600">info@ffcoffeehub.com</p>
+            </div>
+          </div>
+
+          <div class="flex items-start">
+            <div class="bg-primary/10 rounded-full p-3 mr-4">
+              <i class="fas fa-clock text-primary"></i>
+            </div>
+            <div>
+              <h4 class="font-semibold">Opening Hours</h4>
+              <p class="text-gray-600">Open 24/7</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6">
+          <h4 class="font-semibold mb-3">Follow Us</h4>
+          <div class="flex space-x-4">
+            <a
+              href="#"
+              class="bg-primary/10 hover:bg-primary/20 text-primary rounded-full p-3 transition-colors duration-300"
+            >
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a
+              href="#"
+              class="bg-primary/10 hover:bg-primary/20 text-primary rounded-full p-3 transition-colors duration-300"
+            >
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a
+              href="#"
+              class="bg-primary/10 hover:bg-primary/20 text-primary rounded-full p-3 transition-colors duration-300"
+            >
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a
+              href="#"
+              class="bg-primary/10 hover:bg-primary/20 text-primary rounded-full p-3 transition-colors duration-300"
+            >
+              <i class="fab fa-tiktok"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="w-full md:w-1/2 bg-white rounded-lg shadow-md p-6">
+        <h3 class="text-xl font-semibold text-primary mb-4">
+          Send us a Message
+        </h3>
+
+        <form>
+          <div class="mb-4">
+            <label for="name" class="block text-gray-700 mb-2">Your Name</label>
+            <input
+              type="text"
+              id="name"
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+            />
+          </div>
+
+          <div class="mb-4">
+            <label for="email" class="block text-gray-700 mb-2"
+              >Your Email</label
+            >
+            <input
+              type="email"
+              id="email"
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+            />
+          </div>
+
+          <div class="mb-4">
+            <label for="subject" class="block text-gray-700 mb-2"
+              >Subject</label
+            >
+            <input
+              type="text"
+              id="subject"
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+            />
+          </div>
+
+          <div class="mb-4">
+            <label for="message" class="block text-gray-700 mb-2"
+              >Your Message</label
+            >
+            <textarea
+              id="message"
+              rows="4"
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
+            ></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-md font-medium transition-colors duration-300 w-full"
+          >
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Progress bar animation for How It Works section -->
+<script>
+  // document.addEventListener("DOMContentLoaded", function () {
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       entries.forEach((entry) => {
+  //         if (entry.isIntersecting) {
+  //           const progressBar = entry.target.querySelector("#progress-bar");
+  //           if (progressBar) {
+  //             progressBar.style.width = "100%";
+  //           }
+  //         }
+  //       });
+  //     },
+  //     { threshold: 0.5 }
+  //   );
+
+  //   const section = document.querySelector("#how-it-works");
+  //   if (section) {
+  //     observer.observe(section);
+  //   }
+  // });
+</script>

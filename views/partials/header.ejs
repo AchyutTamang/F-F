@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %> - Froth & Flavours</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <nav class="bg-gray-800">
+      <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between h-16">
+          <div class="flex">
+            <a
+              href="/"
+              class="text-white px-3 py-2 rounded-md text-sm font-medium"
+              >Home</a
+            >
+            <a
+              href="/menu"
+              class="text-white px-3 py-2 rounded-md text-sm font-medium"
+              >Menu</a
+            >
+            <a
+              href="/merch"
+              class="text-white px-3 py-2 rounded-md text-sm font-medium"
+              >Merch</a
+            >
+          </div>
+          <div class="flex items-center">
+            <a
+              href="/cart"
+              class="text-white px-3 py-2 rounded-md text-sm font-medium relative"
+            >
+              <i class="fas fa-shopping-cart text-lg"></i>
+              <span
+                id="cartCount"
+                class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 items-center justify-center hidden"
+                >0</span
+              >
+            </a>
+            <% if (isAdmin != "") { %>
+            <a
+              href="/admin/dashboard"
+              class="text-white px-3 py-2 rounded-md text-sm font-medium"
+              >Dashboard</a
+            >
+            <a
+              href="/admin/logout"
+              class="text-white px-3 py-2 rounded-md text-sm font-medium"
+              >Logout</a
+            >
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </body>
+</html>

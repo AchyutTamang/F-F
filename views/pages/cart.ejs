@@ -1,0 +1,266 @@
+<%- contentFor('body') %>
+
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-8">Shopping Cart</h1>
+
+  <div class="flex flex-col lg:flex-row gap-8">
+    <!-- Cart Items -->
+    <div class="lg:w-2/3">
+      <div id="cartItems" class="space-y-4">
+        <!-- Cart items will be loaded here -->
+      </div>
+
+      <!-- Empty Cart Message -->
+      <div id="emptyCartMessage" class="hidden text-center py-8">
+        <p class="text-gray-500 text-lg mb-4">Your cart is empty</p>
+        <a
+          href="/menu"
+          class="inline-block bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-md transition-colors duration-300"
+        >
+          Browse Menu
+        </a>
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="lg:w-1/3">
+      <div class="bg-amber-50 rounded-lg p-6 sticky top-24">
+        <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+
+        <div class="space-y-2 mb-4">
+          <div class="flex justify-between">
+            <span>Subtotal</span>
+            <span id="subtotal">Rs. 0.00</span>
+          </div>
+
+          <div class="flex justify-between">
+            <span>Delivery Fee</span>
+            <span id="deliveryFee">Rs. 150.00</span>
+          </div>
+          <div class="border-t border-gray-200 pt-2 mt-2">
+            <div class="flex justify-between font-semibold">
+              <span>Total</span>
+              <span id="total">Rs. 0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <button
+          id="checkoutButton"
+          class="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-md transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled
+        >
+          Proceed to Checkout
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cart Item Template -->
+<template id="cartItemTemplate">
+  <div
+    class="cart-item bg-white p-4 rounded-lg shadow-md flex items-center gap-4"
+  >
+    <img src="" alt="" class="w-24 h-24 object-cover rounded-md" />
+    <div class="flex-grow">
+      <h3 class="font-semibold mb-1"></h3>
+      <p class="text-primary font-medium"></p>
+    </div>
+    <div class="flex items-center gap-2">
+      <button
+        class="decrease-quantity w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
+      >
+        <i class="fas fa-minus"></i>
+      </button>
+      <span class="quantity-display w-8 text-center"></span>
+      <button
+        class="increase-quantity w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center hover:bg-gray-100 transition-colors"
+      >
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+    <button
+      class="remove-item text-red-500 hover:text-red-600 transition-colors ml-4"
+    >
+      <i class="fas fa-trash"></i>
+    </button>
+  </div>
+</template>
+
+<script>
+  const DELIVERY_FEE = 150;
+
+  // Initialize cart on page load
+  document.addEventListener("DOMContentLoaded", () => {
+    loadCart();
+    // updateCartDisplay();
+    updateCartCount();
+
+    // Add event listener to checkout button
+    const checkoutBtn = document.getElementById("checkoutButton");
+    if (checkoutBtn) {
+      // Remove any existing event listeners
+      const newCheckoutBtn = checkoutBtn.cloneNode(true);
+      checkoutBtn.parentNode.replaceChild(newCheckoutBtn, checkoutBtn);
+
+      newCheckoutBtn.addEventListener("click", function () {
+        proceedToCheckout();
+      });
+    }
+  });
+
+  function loadCart() {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const cartItemsContainer = document.getElementById("cartItems");
+    const emptyCartMessage = document.getElementById("emptyCartMessage");
+    const template = document.getElementById("cartItemTemplate");
+
+    // Show/hide empty cart message
+    if (cart.length === 0) {
+      cartItemsContainer.innerHTML = "";
+      emptyCartMessage.classList.remove("hidden");
+      document.getElementById("checkoutButton").disabled = true;
+      return;
+    }
+
+    emptyCartMessage.classList.add("hidden");
+    document.getElementById("checkoutButton").disabled = false;
+    cartItemsContainer.innerHTML = "";
+
+    cart.forEach((item) => {
+      const cartItem = template.content.cloneNode(true);
+
+      // Set item details
+      const img = cartItem.querySelector("img");
+      img.src = item.image;
+      img.alt = item.name;
+
+      cartItem.querySelector("h3").textContent = item.name;
+      cartItem.querySelector("p").textContent = `Rs. ${item.price}`;
+      cartItem.querySelector(".quantity-display").textContent = item.quantity;
+
+      const itemElement = cartItem.querySelector(".cart-item");
+      itemElement.dataset.itemId = item.id;
+
+      // Add event listeners
+      itemElement
+        .querySelector(".decrease-quantity")
+        .addEventListener("click", () => updateQuantity(item.id, -1));
+      itemElement
+        .querySelector(".increase-quantity")
+        .addEventListener("click", () => updateQuantity(item.id, 1));
+      itemElement
+        .querySelector(".remove-item")
+        .addEventListener("click", () => removeItem(item.id));
+
+      cartItemsContainer.appendChild(cartItem);
+    });
+
+    updateTotals(cart);
+  }
+
+  function updateQuantity(itemId, change) {
+    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const itemIndex = cart.findIndex((item) => item.id === itemId);
+
+    if (itemIndex === -1) return;
+
+    const newQuantity = cart[itemIndex].quantity + change;
+    if (newQuantity < 1) return;
+
+    cart[itemIndex].quantity = newQuantity;
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    // Update display
+    const quantityDisplay = document.querySelector(
+      `[data-item-id="${itemId}"] .quantity-display`
+    );
+    if (quantityDisplay) {
+      quantityDisplay.textContent = newQuantity;
+    }
+
+    updateTotals(cart);
+    updateCartCount();
+  }
+
+  function removeItem(itemId) {
+    let cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    cart = cart.filter((item) => item.id !== itemId);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    // Remove item from display
+    const itemElement = document.querySelector(`[data-item-id="${itemId}"]`);
+    if (itemElement) {
+      itemElement.remove();
+    }
+
+    updateTotals(cart);
+    updateCartCount();
+
+    // Show empty cart message if cart is empty
+    if (cart.length === 0) {
+      document.getElementById("emptyCartMessage").classList.remove("hidden");
+      document.getElementById("checkoutButton").disabled = true;
+    }
+  }
+
+  function updateTotals(cart) {
+    const subtotal = cart.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+    const total = subtotal + DELIVERY_FEE;
+
+    document.getElementById("subtotal").textContent = `Rs. ${subtotal.toFixed(
+      2
+    )}`;
+    document.getElementById("total").textContent = `Rs. ${total.toFixed(2)}`;
+  }
+
+  function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+    // Update cart count in navigation
+    const cartCount = document.getElementById("cart-count");
+    const mobileCartCount = document.getElementById("mobile-cart-count");
+
+    if (cartCount) {
+      cartCount.textContent = totalItems;
+      cartCount.classList.toggle("hidden", totalItems === 0);
+    }
+
+    if (mobileCartCount) {
+      mobileCartCount.textContent = totalItems;
+      mobileCartCount.classList.toggle("hidden", totalItems === 0);
+    }
+  }
+
+  // Proceed to checkout
+  //   document.getElementById("checkoutButton").addEventListener("click", () => {
+  // });
+
+  function getCartItems() {
+    // Get cart from localStorage
+    const cartJson = localStorage.getItem("cart");
+    console.log("Raw cart data from localStorage:", cartJson);
+    return JSON.parse(cartJson || "[]");
+  }
+  function proceedToCheckout() {
+    // Save cart data for the checkout page
+    const cartItems = getCartItems();
+    const subtotal = cartItems.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
+    );
+    const checkoutData = {
+      items: cartItems,
+      subtotal: subtotal,
+      deliveryCharge: 150,
+      total: subtotal + 150,
+    };
+    localStorage.setItem("checkoutData", JSON.stringify(checkoutData));
+    window.location.href = "/checkout";
+  }
+</script>

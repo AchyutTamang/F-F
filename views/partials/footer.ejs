@@ -1,0 +1,117 @@
+<footer class="bg-dark text-white pt-16 pb-8">
+  <div class="container mx-auto px-4">
+    <!-- Footer Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+      <!-- Brand Section -->
+      <div>
+        <div>
+          <img
+            src="/photo/F&F.svg"
+            alt="F&F Coffee Hub Logo"
+            class="h-20 mb-4"
+          /><span class="text-xl font-semibold">F&F Coffee Hub</span>
+        </div>
+        <p class="text-gray-400 mb-4">
+          Serving delicious food and beverages 24/7. Your go-to place for
+          quality dining in Pokhara, Leknath.
+        </p>
+        <!-- Social Links -->
+        <div class="flex space-x-4">
+          <a
+            href="#"
+            class="text-gray-400 hover:text-primary transition-colors"
+          >
+            <i class="fab fa-instagram text-xl"></i>
+          </a>
+          <a
+            href="#"
+            class="text-gray-400 hover:text-primary transition-colors"
+          >
+            <i class="fab fa-facebook text-xl"></i>
+          </a>
+          <a
+            href="#"
+            class="text-gray-400 hover:text-primary transition-colors"
+          >
+            <i class="fab fa-twitter text-xl"></i> </a
+          ><a
+            href="#"
+            class="text-gray-400 hover:text-white transition-colors duration-300"
+          >
+            <i class="fab fa-tiktok"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+        <ul class="space-y-2">
+          <li>
+            <a href="/" class="text-gray-400 hover:text-primary">Home</a>
+          </li>
+          <li>
+            <a href="/#about" class="text-gray-400 hover:text-primary"
+              >About Us</a
+            >
+          </li>
+          <li>
+            <a href="/menu" class="text-gray-400 hover:text-primary">Menu</a>
+          </li>
+          <li>
+            <a href="/merch" class="text-gray-400 hover:text-primary">Merch</a>
+          </li>
+          <li>
+            <a href="/#contact" class="text-gray-400 hover:text-primary"
+              >Contact</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+        <ul class="space-y-2">
+          <li class="flex items-center text-gray-400">
+            <i class="fas fa-map-marker-alt w-5"></i>
+            <span>Talchowk, Pokhara-27, Nepal</span>
+          </li>
+          <li class="flex items-center text-gray-400">
+            <i class="fas fa-phone w-5"></i>
+            <span>+977 9843235566</span>
+          </li>
+          <li class="flex items-center text-gray-400">
+            <i class="fas fa-envelope w-5"></i>
+            <span>frothandflavours@gmail.com</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Opening Hours -->
+      <div>
+        <h3 class="text-lg font-semibold mb-4">Opening Hours</h3>
+        <ul class="space-y-2">
+          <li class="text-gray-400">Monday - Friday</li>
+          <li class="text-gray-400">Open 24 Hours</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="border-t border-gray-800 pt-8">
+      <p class="text-center text-gray-400">
+        © <%= new Date().getFullYear() %> Froth n Flavours. All rights reserved.
+      </p>
+    </div>
+  </div>
+</footer>
+
+<!-- Mobile Navigation Script -->
+<script>
+  document
+    .getElementById("mobile-menu-button")
+    .addEventListener("click", function () {
+      document.getElementById("mobile-menu").classList.toggle("hidden");
+    });
+</script>

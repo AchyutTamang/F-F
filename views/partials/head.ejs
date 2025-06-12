@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= locals.title ? `${title} - ` : '' %>Froth n Flavours</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#FF6B6B",
+              secondary: "#e4a672",
+              dark: "#292F36",
+              light: "#FFF9EA",
+            },
+          },
+        },
+      };
+
+      // Global cart functionality
+      function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+
+        // Update all cart count elements
+        const cartCount = document.getElementById("cart-count");
+        const mobileCartCount = document.getElementById("mobile-cart-count");
+
+        if (cartCount) {
+          cartCount.textContent = totalItems;
+          cartCount.style.display = totalItems > 0 ? "flex" : "none";
+        }
+
+        if (mobileCartCount) {
+          mobileCartCount.textContent = totalItems;
+          mobileCartCount.style.display = totalItems > 0 ? "flex" : "none";
+        }
+      }
+
+      // Update cart count when page loads
+      document.addEventListener("DOMContentLoaded", updateCartCount);
+    </script>
+  </head>
+  <body class="font-sans"></body>
+</html>

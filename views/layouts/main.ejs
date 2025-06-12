@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="shortcut icon"
+      href="https://fnfimagebucket.s3.ap-south-1.amazonaws.com/menu-items/logo_trans.png"
+      type="image/x-icon"
+    />
+    <title><%= title ? (title + ' - ') : '' %> Froth n Flavours</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#FF6B6B",
+              secondary: "#e4a672",
+              dark: "#292F36",
+              light: "#FFF9EA",
+              accent: "#c06c54",
+              gold: "#DEB887",
+            },
+            fontFamily: {
+              sans: ["Montserrat", "sans-serif"],
+              display: ["Cormorant Garamond", "serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body class="font-sans bg-light min-h-screen flex flex-col">
+    <%- include('../partials/nav', {path: "", isAdmin: false}) %>
+
+    <!-- Add padding-top to account for fixed header -->
+    <main class="flex-grow pt-20"><%- body %></main>
+
+    <%- include('../partials/footer') %>
+  </body>
+</html>
