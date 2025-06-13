@@ -88,7 +88,6 @@ mongoose.connect(process.env.MONGODB_URI).then(async () => {
   const adminExists = await Admin.find({});
   if (adminExists.length == 0) {
     // await Admin.deleteMany({});
-    // console.log("Deleted existing admins");
     const admin = new Admin({
       email: process.env.ADMIN_EMAIL,
       phoneNo: process.env.ADMIN_PHONE,
@@ -104,12 +103,11 @@ mongoose.connect(process.env.MONGODB_URI).then(async () => {
 });
 
 // Routes in order of specificity
-// app.use("/api", apiRoutes); // API routes first
 app.use("/admin", adminRoutes); // Admin routes
 app.use("/menu", menuRoutes); // Menu specific routes
-app.use("/", mainRoutes); // Main routes last
 app.use("/cart", cartRoutes); // Cart routes
 app.use("/checkout", checkoutRoutes);
+app.use("/", mainRoutes); // Main routes last
 
 // Error Handling
 app.use(notFound);

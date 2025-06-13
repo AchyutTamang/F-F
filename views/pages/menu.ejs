@@ -1,9 +1,8 @@
 <%- contentFor('body') %>
 
 <div class="container mx-auto px-4 py-8">
-  <div class="mb-8">
+  <!-- <div class="mb-8">
     <form id="filterForm" class="space-y-4">
-      <!-- Search Bar -->
       <div class="flex gap-4">
         <input
           type="text"
@@ -14,15 +13,11 @@
         />
       </div>
 
-      <!-- Filters -->
       <div class="flex flex-wrap gap-4">
-        <!-- Category Filter -->
         <select name="category" class="p-2 border rounded" id="categorySelect">
           <option value="all">All Categories</option>
-          <!-- Categories will be loaded dynamically -->
         </select>
 
-        <!-- Price Range -->
         <input
           type="number"
           name="minPrice"
@@ -46,10 +41,10 @@
         </button>
       </div>
     </form>
-  </div>
+  </div> -->
 
   <!-- Menu Items Grid -->
-  <div
+  <!-- <div
     id="menuItemsGrid"
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
   >
@@ -67,7 +62,6 @@
           <span class="text-lg font-bold">Rs. <%= item.price %></span>
           <span class="text-sm text-gray-500"><%= item.category %></span>
         </div>
-        <!-- Add this in your menu item template -->
         <div class="flex space-x-2 mt-4">
           <% if (!item.isAvailable) { %>
           <span class="text-red-500">Not Available!</span>
@@ -98,11 +92,97 @@
       </div>
     </div>
     <% }) %>
+  </div> -->
+  <div class="container mx-auto px-4 py-8">
+    <div id="menu-categories" class="mb-8"></div>
+    <div
+      id="menu-items"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+    >
+      <% const itemsByCategory = menuItems.reduce((acc, item) => { if
+      (!acc[item.category]) { acc[item.category] = []; }
+      acc[item.category].push(item); return acc; }, {});
+      Object.entries(itemsByCategory).forEach(([category, items]) => { %>
+      <div class="col-span-full">
+        <h2 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">
+          <%= category %>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <% items.forEach(item => { %>
+          <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <img
+              src="<%= item.image %>"
+              alt="<%= item.name %>"
+              class="w-full h-48 object-cover"
+            />
+            <div class="p-4">
+              <h3 class="text-xl font-semibold mb-2"><%= item.name %></h3>
+              <p class="text-gray-600 mb-4"><%= item.description %></p>
+              <div class="flex justify-between items-center mb-4">
+                <span class="text-lg font-bold">Rs. <%= item.price %></span>
+                <span class="text-sm text-gray-500"><%= item.category %></span>
+              </div>
+              <div class="flex space-x-2 mt-4">
+                <% if (!item.isAvailable) { %>
+                <span class="text-red-500">Not Available!</span>
+                <% } else { %>
+                <button
+                  onclick="addToCart({id: '<%= item._id %>',
+                              name: '<%= item.name %>',
+                              price: '<%= item.price %>',
+                              image: '<%= item.image %>',
+                              quantity: 1})"
+                  class="bg-primary text-white px-4 py-2 rounded hover:bg-primary/90"
+                >
+                  Add to Cart
+                </button>
+                <button
+                  onclick="directCheckout({id: '<%= item._id %>',
+                              name: '<%= item.name %>',
+                              price: '<%= item.price %>',
+                              image: '<%= item.image %>',
+                              quantity: 1})"
+                  class="bg-accent text-white px-4 py-2 rounded hover:bg-accent/90"
+                >
+                  Order Now
+                </button>
+                <% } %>
+              </div>
+            </div>
+          </div>
+          <% }); %>
+        </div>
+      </div>
+      <% }); %>
+    </div>
   </div>
 </div>
 
 <!-- Add client-side JavaScript for real-time filtering and cart functionality -->
 <script>
+  // Fetch categories when the page loads
+  fetch("/menu/getCategories")
+    .then((response) => response.json())
+    .then((categories) => {
+      const categoriesContainer = document.getElementById("menu-categories");
+      categoriesContainer.innerHTML = `
+        <div class="flex flex-wrap gap-4 justify-center">
+          ${categories
+            .map(
+              (category) => `
+            <button 
+              onclick="window.location.href='/menu?category=${category.value}'"
+              class="px-4 py-2 rounded-full bg-gray-200 hover:bg-primary hover:text-white transition-colors"
+            >
+              ${category.label}
+            </button>
+          `
+            )
+            .join("")}
+        </div>
+      `;
+    })
+    .catch((error) => console.error("Error fetching categories:", error));
   document
     .getElementById("filterForm")
     .addEventListener("submit", async (e) => {

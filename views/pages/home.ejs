@@ -13,7 +13,7 @@
   <!-- Overlay -->
   <div class="absolute inset-0 bg-black bg-opacity-50"></div>
 
-  <div class="container mx-auto px-4 relative">
+  <div class="container mx-auto px-4 relative ani">
     <div class="flex flex-col md:flex-row items-center">
       <!-- Left Content -->
       <div
@@ -145,7 +145,7 @@
 </section>
 
 <!-- About Us Section -->
-<section id="about" class="py-16 px-4 bg-amber-50">
+<section id="about" class="py-16 px-4 bg-amber-50 pt-24">
   <div class="container mx-auto">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
       <!-- Image -->
@@ -153,11 +153,11 @@
         <img
           src="https://fnfimagebucket.s3.ap-south-1.amazonaws.com/menu-items/logo_trans.png"
           alt="Our Coffee Shop"
-          class="rounded-lg w-full object-cover"
+          class="rounded-lg w-[70%] object-cover"
         />
-        <div
+        <!-- <div
           class="absolute -bottom-6 -right-6 w-48 h-48 bg-primary rounded-lg -z-10"
-        ></div>
+        ></div> -->
       </div>
 
       <!-- Content -->
@@ -567,7 +567,7 @@
 </section> -->
 
 <!-- Contact Us Section -->
-<section id="contact" class="py-16 px-4">
+<section id="contact" class="py-16 px-4 pt-24">
   <div class="container mx-auto">
     <div class="text-center mb-12">
       <h2 class="text-3xl font-display font-bold text-dark mb-4">Contact Us</h2>
@@ -660,12 +660,19 @@
           Send us a Message
         </h3>
 
-        <form>
+        <form action="https://api.web3forms.com/submit" method="POST">
+          <input
+            type="hidden"
+            name="access_key"
+            value="11c58934-38b0-4757-b586-a68b199fadb1"
+          />
+
           <div class="mb-4">
             <label for="name" class="block text-gray-700 mb-2">Your Name</label>
             <input
               type="text"
               id="name"
+              name="name"
               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
           </div>
@@ -677,6 +684,7 @@
             <input
               type="email"
               id="email"
+              name="email"
               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
           </div>
@@ -688,6 +696,7 @@
             <input
               type="text"
               id="subject"
+              name="subject"
               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
             />
           </div>
@@ -698,6 +707,7 @@
             >
             <textarea
               id="message"
+              name="message"
               rows="4"
               class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50"
             ></textarea>

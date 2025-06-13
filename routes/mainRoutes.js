@@ -50,4 +50,9 @@ router.get("/merch", async (req, res, next) => {
   }
 });
 
+router.all("/*", (req, res) => {
+  res.render("pages/home", {
+    title: "Home",
+  });
+});
 module.exports = router;

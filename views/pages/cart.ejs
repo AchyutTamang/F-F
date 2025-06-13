@@ -216,7 +216,9 @@
     document.getElementById("subtotal").textContent = `Rs. ${subtotal.toFixed(
       2
     )}`;
-    document.getElementById("total").textContent = `Rs. ${total.toFixed(2)}`;
+    document.getElementById("total").textContent = `Rs. ${
+      subtotal == 0 ? 0 : total.toFixed(2)
+    }`;
   }
 
   function updateCartCount() {

@@ -85,7 +85,7 @@
   }
 </script> -->
 
-<section class="pt-32 pb-16 px-4">
+<section class="pt-16 pb-16 px-4">
   <div class="container mx-auto">
     <!-- Empty Cart Message -->
     <div id="emptyCartMessage" class="hidden text-center py-8">
@@ -214,12 +214,12 @@
 
 <script>
   // Mobile menu toggle
-  const mobileMenuButton = document.getElementById("mobile-menu-button");
-  const mobileMenu = document.getElementById("mobile-menu");
+  // const mobileMenuButton = document.getElementById("mobile-menu-button");
+  // const mobileMenu = document.getElementById("mobile-menu");
 
-  mobileMenuButton.addEventListener("click", () => {
-    mobileMenu.classList.toggle("hidden");
-  });
+  // mobileMenuButton.addEventListener("click", () => {
+  //   mobileMenu.classList.toggle("hidden");
+  // });
 
   // Cart functionality
   document.addEventListener("DOMContentLoaded", function () {
@@ -303,12 +303,14 @@
             units: item.quantity, // Matches {{units}}
             price: item.price, // Matches {{price}}
             image_url: item.image, // Matches {{image_url}}
+            itemTotal: item.price * item.quantity,
           })),
           cost: {
             // Matches {{cost}} object
             shipping: 150, // Matches {{cost.shipping}}
             tax: 0, // Matches {{cost.tax}}
-            total: checkoutData.subtotal, // Matches {{cost.total}}
+            subTotal: checkoutData.subtotal, // Matches {{cost.total}}
+            total: checkoutData.subtotal + 150,
           },
           // Removed attachment attempt as client-side path is not the correct method for CID embedding
         };
@@ -340,7 +342,7 @@
             console.log("Admin email sent successfully:", response);
 
             // Show success modal
-            document.getElementById("success-modal").classList.remove("hidden");
+            // document.getElementById("success-modal").classList.remove("hidden");
 
             // Clear cart after successful order
             localStorage.removeItem("cart");
@@ -464,7 +466,7 @@
   })();
 </script>
 
-<script>
+<!-- <script>
   document.addEventListener("DOMContentLoaded", () => {
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
     const emptyCartMessage = document.getElementById("emptyCartMessage");
@@ -480,4 +482,4 @@
       loadCart(); // Your existing cart loading function
     }
   });
-</script>
+</script> -->

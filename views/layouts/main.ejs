@@ -48,6 +48,52 @@
     <!-- Add padding-top to account for fixed header -->
     <main class="flex-grow pt-20"><%- body %></main>
 
+    <!-- Floating Cart Button for Mobile -->
+    <a
+      href="/cart"
+      class="fixed bottom-6 right-6 bg-primary text-white p-4 rounded-full shadow-lg lg:hidden z-50 hover:bg-primary/90 transition-colors"
+      aria-label="Cart"
+    >
+      <i class="fas fa-shopping-cart text-xl"></i>
+      <span
+        id="floating-cart-count"
+        class="absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full h-6 w-6 flex items-center justify-center font-medium"
+      >
+        0
+      </span>
+    </a>
+
     <%- include('../partials/footer') %>
+
+    <script>
+      // Sync cart count with floating button
+      function updateFloatingCartCount(count) {
+        const floatingCartCount = document.getElementById(
+          "floating-cart-count"
+        );
+        if (floatingCartCount) {
+          floatingCartCount.textContent = count;
+        }
+      }
+
+      // Listen for cart updates
+      document.addEventListener("DOMContentLoaded", function () {
+        const mainCartCount = document.getElementById("cart-count");
+        if (mainCartCount) {
+          updateFloatingCartCount(mainCartCount.textContent.trim());
+          // Create observer for cart count changes
+          const observer = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutation) {
+              updateFloatingCartCount(mutation.target.textContent.trim());
+            });
+          });
+          observer.observe(mainCartCount, {
+            characterData: true,
+            childList: true,
+            subtree: true,
+          });
+        }
+      });
+    </script>
   </body>
 </html>
