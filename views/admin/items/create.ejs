@@ -55,7 +55,7 @@
         <!-- Price -->
         <div class="mb-6">
           <label for="price" class="block text-sm font-medium text-gray-700"
-            >Price (₹)</label
+            >Price (Rs. )</label
           >
           <input
             type="number"
@@ -125,7 +125,6 @@
     try {
       const response = await fetch("/menu/getCategories");
       const categories = await response.json();
-      //   console.log("cato: ", categories);
 
       const categorySelect = document.getElementById("category");
 

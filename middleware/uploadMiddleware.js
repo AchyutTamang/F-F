@@ -63,14 +63,12 @@ const upload = multer({
       });
     },
     contentType: multerS3.AUTO_CONTENT_TYPE,
-    // Use path style endpoint
     endpoint: `https://s3.${process.env.AWS_REGION}.amazonaws.com`,
     key: function (req, file, cb) {
       const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
       const fileName = `menu-items/${uniqueSuffix}${path
         .extname(file.originalname)
         .toLowerCase()}`;
-      // Store the generated filename in the request for later use
       if (!req.uploadedFiles) req.uploadedFiles = [];
       req.uploadedFiles.push({
         originalName: file.originalname,

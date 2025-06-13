@@ -94,7 +94,6 @@
     try {
       const response = await fetch("/menu/getCategories");
       const categories = await response.json();
-        console.log("cato: ", categories);
 
       const categorySelect = document.getElementById("category");
 
@@ -132,10 +131,7 @@ document.getElementById('itemForm').addEventListener('submit', function(e) {
         return;
     }
     
-    // if (description.length < 10) {
-    //     alert('Description must be at least 10 characters long');
-    //     return;
-    // }
+  
     
     this.submit();
 });

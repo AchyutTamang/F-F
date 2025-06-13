@@ -103,18 +103,14 @@ async function seedDatabase() {
   try {
     // Clear existing data
     await MenuItem.deleteMany({});
-    console.log("Cleared existing menu items");
 
     // Insert new data
     const result = await MenuItem.insertMany(menuItems);
-    console.log(`Successfully inserted ${result.length} menu items`);
 
     // Log categories for verification
     const categories = [...new Set(menuItems.map((item) => item.category))];
-    console.log("Categories in database:", categories);
 
     mongoose.disconnect();
-    console.log("Database seeding completed");
   } catch (error) {
     console.error("Error seeding database:", error);
     process.exit(1);

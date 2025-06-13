@@ -17,11 +17,9 @@ const generateToken = (id) => {
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("Login attempt with:", { email, password });
 
     const admin = await Admin.findOne({ email });
     if (!admin) {
-      console.log("Admin not found");
       return res.render("admin/login", {
         title: "Admin Login",
         error: "Invalid email or password",
@@ -30,10 +28,8 @@ exports.login = async (req, res) => {
 
     // Use the model's method to compare passwords
     const isMatch = await admin.matchPassword(password);
-    console.log("Password match:", isMatch);
 
     if (!isMatch) {
-      console.log("Password doesn't match");
       return res.render("admin/login", {
         title: "Admin Login",
         error: "Invalid email or password",
@@ -51,7 +47,6 @@ exports.login = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
 
-    console.log("Login successful, redirecting to dashboard");
     res.redirect("/admin/dashboard");
   } catch (error) {
     console.error("Login error:", error);
@@ -122,8 +117,6 @@ exports.requestPasswordReset = async (req, res) => {
     admin.resetTokenExpiry = Date.now() + 3600000; // 1 hour
     await admin.save();
 
-    // Send reset email logic here
-
     res.json({ message: "Password reset instructions sent" });
   } catch (error) {
     res.status(500).json({ message: "Error requesting password reset" });
@@ -132,7 +125,6 @@ exports.requestPasswordReset = async (req, res) => {
 
 exports.getDashboard = async (req, res) => {
   try {
-    console.log("admin menu items: ");
     // Get counts for statistics
     const totalItems = await MenuItem.countDocuments();
     const totalCategories = await Category.countDocuments();
@@ -143,7 +135,6 @@ exports.getDashboard = async (req, res) => {
       .sort({ orderCount: -1 })
       .limit(5);
     const items = await itemController.getItems();
-    console.log("admin menu items: ", items);
 
     res.render("admin/dashboard", {
       title: "Admin Dashboard",
@@ -155,12 +146,6 @@ exports.getDashboard = async (req, res) => {
       popularItems,
       items,
       isCategory: false,
-      // Add monthly comparison (you can implement actual logic later)
-      // monthlyChange: {
-      //   items: 12,
-      //   categories: 0,
-      //   products: 8,
-      // },
     });
   } catch (error) {
     console.error("Dashboard error:", error);
@@ -172,7 +157,6 @@ exports.getDashboard = async (req, res) => {
 };
 exports.getDashboardMerch = async (req, res) => {
   try {
-    console.log("admin Merch: ");
     // Get counts for statistics
     const totalItems = await Merch.countDocuments();
     const totalCategories = await Category.countDocuments();
@@ -181,7 +165,6 @@ exports.getDashboardMerch = async (req, res) => {
     // Get popular items
     const popularItems = await Merch.find().sort({ orderCount: -1 }).limit(5);
     const items = await itemController.getMerchs();
-    console.log("admin Merchs: ", items);
 
     res.render("admin/dashboard", {
       title: "Admin Dashboard",
@@ -193,12 +176,6 @@ exports.getDashboardMerch = async (req, res) => {
       popularItems,
       items,
       isCategory: false,
-      // Add monthly comparison (you can implement actual logic later)
-      // monthlyChange: {
-      //   items: 12,
-      //   categories: 0,
-      //   products: 8,
-      // },
     });
   } catch (error) {
     console.error("Dashboard error:", error);
@@ -210,7 +187,6 @@ exports.getDashboardMerch = async (req, res) => {
 };
 exports.getDashboardCategory = async (req, res) => {
   try {
-    console.log("admin cat: ");
     // Get counts for statistics
     const totalItems = await Merch.countDocuments();
     const totalCategories = await Category.countDocuments();
@@ -221,7 +197,6 @@ exports.getDashboardCategory = async (req, res) => {
       .sort({ orderCount: -1 })
       .limit(5);
     const items = await itemController.getCategories();
-    // console.log("admin Merchs: ", items);
 
     res.render("admin/dashboard", {
       title: "Admin Dashboard",
@@ -233,12 +208,6 @@ exports.getDashboardCategory = async (req, res) => {
       popularItems,
       items,
       isCategory: true,
-      // Add monthly comparison (you can implement actual logic later)
-      // monthlyChange: {
-      //   items: 12,
-      //   categories: 0,
-      //   products: 8,
-      // },
     });
   } catch (error) {
     console.error("Dashboard error:", error);

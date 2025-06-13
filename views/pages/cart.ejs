@@ -94,10 +94,8 @@
   // Initialize cart on page load
   document.addEventListener("DOMContentLoaded", () => {
     loadCart();
-    // updateCartDisplay();
     updateCartCount();
 
-    // Add event listener to checkout button
     const checkoutBtn = document.getElementById("checkoutButton");
     if (checkoutBtn) {
       // Remove any existing event listeners
@@ -116,7 +114,6 @@
     const emptyCartMessage = document.getElementById("emptyCartMessage");
     const template = document.getElementById("cartItemTemplate");
 
-    // Show/hide empty cart message
     if (cart.length === 0) {
       cartItemsContainer.innerHTML = "";
       emptyCartMessage.classList.remove("hidden");
@@ -130,7 +127,6 @@
 
     cart.forEach((item) => {
       const cartItem = template.content.cloneNode(true);
-      console.log("tem: ", item);
 
       // Set item details
       const img = cartItem.querySelector("img");
@@ -144,7 +140,6 @@
       const itemElement = cartItem.querySelector(".cart-item");
       itemElement.dataset.itemId = item.id;
 
-      // Add event listeners
       itemElement
         .querySelector(".decrease-quantity")
         .addEventListener("click", () => updateQuantity(item.id, -1));
@@ -190,7 +185,6 @@
     cart = cart.filter((item) => item.id !== itemId);
     localStorage.setItem("cart", JSON.stringify(cart));
 
-    // Remove item from display
     const itemElement = document.querySelector(`[data-item-id="${itemId}"]`);
     if (itemElement) {
       itemElement.remove();
@@ -199,7 +193,6 @@
     updateTotals(cart);
     updateCartCount();
 
-    // Show empty cart message if cart is empty
     if (cart.length === 0) {
       document.getElementById("emptyCartMessage").classList.remove("hidden");
       document.getElementById("checkoutButton").disabled = true;
@@ -240,14 +233,9 @@
     }
   }
 
-  // Proceed to checkout
-  //   document.getElementById("checkoutButton").addEventListener("click", () => {
-  // });
-
   function getCartItems() {
     // Get cart from localStorage
     const cartJson = localStorage.getItem("cart");
-    console.log("Raw cart data from localStorage:", cartJson);
     return JSON.parse(cartJson || "[]");
   }
   function proceedToCheckout() {

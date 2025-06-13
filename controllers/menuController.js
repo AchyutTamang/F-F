@@ -3,8 +3,6 @@ const MenuItemCategory = require("../models/Category");
 
 exports.getFilteredItems = async (req, res) => {
   try {
-    console.log("menu in menuController");
-
     const { search, category, minPrice, maxPrice } = req.query;
     let query = {};
 

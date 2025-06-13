@@ -56,7 +56,6 @@
     showAddToCartToast(item.name);
   }
   function updateCartCount() {
-    // Use the global updateCartCount function defined in head.ejs
     const cart = JSON.parse(localStorage.getItem("cart") || "[]");
     const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     const cartCount = document.getElementById("cart-count");

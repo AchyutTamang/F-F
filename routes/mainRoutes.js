@@ -18,8 +18,6 @@ router.get("/", (req, res) => {
 });
 
 router.get("/menu", async (req, res, next) => {
-  console.log("menu in mainRoute");
-
   try {
     const menuItems = await MenuItem.find({
       category: { $in: ["beverage", "food"] },
@@ -35,11 +33,8 @@ router.get("/menu", async (req, res, next) => {
 });
 
 router.get("/merch", async (req, res, next) => {
-  console.log("in merch get");
-
   try {
     const merchItems = await Merch.find({});
-    // const merchItems = {};
     res.render("pages/merch", {
       title: "Merchandise",
       merchItems,

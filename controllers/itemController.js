@@ -150,13 +150,8 @@ exports.createMerch = async (req, res) => {
 exports.createItemCategory = async (req, res) => {
   try {
     const { name, description } = req.body;
-    console.log(req.body);
-    console.log(name, description);
-
     // Input validation
     if (!name || !description) {
-      console.log("all filed ");
-
       return res.redirect("/admin/items/category/new");
     }
 
@@ -202,10 +197,8 @@ exports.updateItem = async (req, res) => {
               Key: oldItem.imageKey,
             })
           );
-          console.log("Old image deleted from S3");
         } catch (deleteError) {
           console.error("Error deleting old image:", deleteError);
-          // Continue with update even if delete fails
         }
       }
     }
@@ -233,15 +226,12 @@ exports.deleteItem = async (req, res) => {
             Key: item.imageKey,
           })
         );
-        console.log("Image deleted from S3");
       } catch (deleteError) {
         console.error("Error deleting image from S3:", deleteError);
-        // Continue with deletion even if S3 delete fails
       }
     }
 
     await MenuItem.findByIdAndDelete(req.params.id);
-    // res.status(200).json({ message: "Item deleted successfully" });
     res.json({
       message: "Merch deleted successfully",
       status: 200,
@@ -266,15 +256,12 @@ exports.deleteMerch = async (req, res) => {
             Key: item.imageKey,
           })
         );
-        console.log("Image deleted from S3");
       } catch (deleteError) {
         console.error("Error deleting image from S3:", deleteError);
-        // Continue with deletion even if S3 delete fails
       }
     }
 
     await Merch.findByIdAndDelete(req.params.id);
-    // res.status(200).json({ message: "Item deleted successfully" });
     res.json({
       message: "Merch deleted successfully",
       status: 200,
@@ -290,10 +277,8 @@ exports.deleteMerch = async (req, res) => {
 exports.deleteCategory = async (req, res) => {
   try {
     const item = await Category.findById(req.params.id);
-  
 
     await Category.findByIdAndDelete(req.params.id);
-    // res.status(200).json({ message: "Item deleted successfully" });
     res.json({
       message: "Merch deleted successfully",
       status: 200,

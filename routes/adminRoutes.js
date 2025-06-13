@@ -65,54 +65,28 @@ router.get("/items/merch/new", protect, (req, res) => {
 });
 
 // Create item with S3 upload
-router.post(
-  "/items",
-  protect,
-  upload.single("image"),
-  // uploadErrorHandler,
-  createItem
-);
-router.post(
-  "/merch",
-  protect,
-  upload.single("image"),
-  // uploadErrorHandler,
-  createMerch
-);
+router.post("/items", protect, upload.single("image"), createItem);
+router.post("/merch", protect, upload.single("image"), createMerch);
 router.post("/items/category", protect, createItemCategory);
 
 // Get item for editing
 router.get("/items/:id/edit/:category", protect, async (req, res) => {
   try {
-    console.log("item id: ", req.params.id);
     const item = await getItem(req.params.id, req.params.category);
     if (!item) {
-      console.log("item not found");
-
-      // req.flash("error", "Item not found");
       return res.redirect("/admin/dashboard");
     }
-    console.log("item found: ", item);
     res.render("admin/items/edit", {
       title: "Edit Item",
       item,
-      // error: req.flash("error"),
-      // success: req.flash("success"),
     });
   } catch (error) {
-    // req.flash("error", "Error loading item");
     res.redirect("/admin/dashboard");
   }
 });
 
 // Update item with S3 upload
-router.put(
-  "/items/:id",
-  protect,
-  upload.single("image"),
-  // uploadErrorHandler,
-  updateItem
-);
+router.put("/items/:id", protect, upload.single("image"), updateItem);
 
 // Delete item and its S3 image
 router.delete("/items/:id", protect, deleteItem);
@@ -122,7 +96,6 @@ router.delete("/category/:id", protect, deleteCategory);
 // Error handler for this router
 router.use((error, req, res, next) => {
   console.error("Admin route error:", error);
-  // req.flash("error", "An error occurred while processing your request");
   res.redirect("/admin/dashboard");
 });
 
@@ -177,7 +150,6 @@ router.get("/orders", protect, async (req, res) => {
 // Error handler for this router
 router.use((error, req, res, next) => {
   console.error("Admin route error:", error);
-  // req.flash("error", "An error occurred while processing your request");
   res.redirect("/admin/dashboard");
 });
 
