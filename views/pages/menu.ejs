@@ -74,6 +74,12 @@
       const categoriesContainer = document.getElementById("menu-categories");
       categoriesContainer.innerHTML = `
         <div class="flex flex-wrap gap-4 justify-center">
+          <button 
+            onclick="window.location.href='/menu?category=all'"
+            class="px-4 py-2 rounded-full bg-gray-200 hover:bg-primary hover:text-white transition-colors"
+          >
+            All
+          </button>
           ${categories
             .map(
               (category) => `
@@ -90,26 +96,6 @@
       `;
     })
     .catch((error) => console.error("Error fetching categories:", error));
-  document
-    .getElementById("filterForm")
-    .addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const formData = new FormData(e.target);
-      const searchParams = new URLSearchParams(formData);
-      const url = `/menu?${searchParams.toString()}`;
-
-      try {
-        const response = await fetch(url, {
-          headers: {
-            "X-Requested-With": "XMLHttpRequest",
-          },
-        });
-        const items = await response.json();
-        updateMenuItems(items);
-      } catch (error) {
-        console.error("Error:", error);
-      }
-    });
 
   function updateMenuItems(items) {
     const grid = document.getElementById("menuItemsGrid");
@@ -221,7 +207,6 @@
 
   // Load categories when page loads
   document.addEventListener("DOMContentLoaded", () => {
-    loadCategories();
     updateCartCount();
   });
   async function directCheckout(item) {
@@ -229,35 +214,24 @@
       // Clear the existing cart
       localStorage.setItem("cart", "[]");
 
-      // Get the item details from the menu items
-      const menuItem = Array.from(
-        document.querySelectorAll("#menuItemsGrid > div")
-      ).find((div) => {
-        const addToCartBtn = div.querySelector("button");
-        return (
-          addToCartBtn && addToCartBtn.getAttribute("onclick").includes(item.id)
-        );
-      });
+      const items = {
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        image: item.image,
+        quantity: 1,
+      };
 
-      if (menuItem) {
-        // Extract item details
-        const items = {
-          id: item.id,
-          name: item.name,
-          price: item.price,
-          image: item.image,
-          quantity: 1,
-        };
+      console.log("mm: ", items);
 
-        // Set the single item in cart
-        localStorage.setItem("cart", JSON.stringify([items]));
+      // Set the single item in cart
+      localStorage.setItem("cart", JSON.stringify([items]));
 
-        // Update cart count display
-        updateCartCount();
+      // Update cart count display
+      updateCartCount();
 
-        // Redirect to cart page
-        window.location.href = "/cart";
-      }
+      // Redirect to cart page
+      window.location.href = "/cart";
     } catch (error) {
       console.error("Error:", error);
       alert("Error processing order. Please try again.");
