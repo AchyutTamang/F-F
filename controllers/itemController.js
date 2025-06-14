@@ -156,7 +156,7 @@ exports.createItemCategory = async (req, res) => {
     }
 
     const newItemCategory = new MenuItemCategory({
-      name,
+      name: String(name).toLowerCase(),
       description,
     });
 

@@ -146,6 +146,7 @@ exports.getDashboard = async (req, res) => {
       popularItems,
       items,
       isCategory: false,
+      
     });
   } catch (error) {
     console.error("Dashboard error:", error);
