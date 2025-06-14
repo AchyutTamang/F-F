@@ -23,7 +23,7 @@
             <textarea id="description" 
                       name="description"
                       class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2"
-                      required><%= item.description %></textarea>
+                      ><%= item.description %></textarea>
         </div>
 
         <div class="mb-4">
@@ -47,8 +47,16 @@
                 <option value="false" <%= !item.isAvailable ? 'selected' : '' %>>No</option>
             </select>
         </div>
-
+        
         <% if (item.category == "merch") { %>
+            <select id="category" 
+                    name="category"
+                    class="hidden w-full px-3 py-2 border rounded focus:outline-none focus:ring-2"
+                    >
+                    <option value="merch" selected>Merch</option>
+
+                    
+            </select>
           
         <% }else{ %>
 
@@ -97,7 +105,10 @@
 
       const categorySelect = document.getElementById("category");
 
-      
+if (categorySelect.querySelector('option[value="merch"]')) {
+  return;
+}
+
       // Keep the "All Categories" option and add fetched categories
       categorySelect.innerHTML = `
             ${categories

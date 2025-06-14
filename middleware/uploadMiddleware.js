@@ -92,8 +92,31 @@ const upload = multer({
     }
   },
   limits: {
-    fileSize: 15 * 1024 * 1024, // 15MB limit
+    fileSize: 25 * 1024 * 1024, // 25MB limit
   },
 });
 
-module.exports = { upload };
+// Error handling middleware
+const handleUpload = (req, res, next) => {
+  const uploadSingle = upload.single("image");
+
+  uploadSingle(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      if (err.code === "LIMIT_FILE_SIZE") {
+        return res.status(400).json({
+          error: "File size too large. Maximum size allowed is 25MB",
+        });
+      }
+      return res.status(400).json({
+        error: `Upload error: ${err.message}`,
+      });
+    } else if (err) {
+      return res.status(400).json({
+        error: err.message,
+      });
+    }
+    next();
+  });
+};
+
+module.exports = { upload, handleUpload };

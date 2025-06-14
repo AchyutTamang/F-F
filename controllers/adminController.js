@@ -129,25 +129,54 @@ exports.getDashboard = async (req, res) => {
     const totalItems = await MenuItem.countDocuments();
     const totalCategories = await Category.countDocuments();
     const totalProducts = await Merch.countDocuments();
+    console.log("filtered: ", req.query.category, req.query.search);
 
-    // Get popular items
-    const popularItems = await MenuItem.find()
-      .sort({ orderCount: -1 })
-      .limit(5);
-    const items = await itemController.getItems();
+    if (req.query.category || req.query.search) {
+      let query = {};
+      if (req.query.category) {
+        query.category = req.query.category;
+      }
+      if (req.query.search) {
+        // query.name = { $regex: req.params.search, $options: "i" };
+        query.$text = { $search: req.query.search };
+      }
+      const items = await MenuItem.find(query);
+      const popularItems = await MenuItem.find()
+        .sort({ orderCount: -1 })
+        .limit(5);
+      // const items = await itemController.getItems();
+      console.log("admin filter item: ", items);
 
-    res.render("admin/dashboard", {
-      title: "Admin Dashboard",
-      path: "/admin/dashboard",
-      isAdmin: true,
-      totalItems,
-      totalCategories,
-      totalProducts,
-      popularItems,
-      items,
-      isCategory: false,
-      
-    });
+      res.render("admin/dashboard", {
+        title: "Admin Dashboard",
+        path: "/admin/dashboard",
+        isAdmin: true,
+        totalItems,
+        totalCategories,
+        totalProducts,
+        popularItems,
+        items,
+        isCategory: false,
+      });
+    } else {
+      // Get popular items
+      const popularItems = await MenuItem.find()
+        .sort({ orderCount: -1 })
+        .limit(5);
+      const items = await itemController.getItems();
+
+      res.render("admin/dashboard", {
+        title: "Admin Dashboard",
+        path: "/admin/dashboard",
+        isAdmin: true,
+        totalItems,
+        totalCategories,
+        totalProducts,
+        popularItems,
+        items,
+        isCategory: false,
+      });
+    }
   } catch (error) {
     console.error("Dashboard error:", error);
     res.status(500).render("error", {

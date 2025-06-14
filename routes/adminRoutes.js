@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { protect } = require("../middleware/authMiddleware");
-const { upload } = require("../middleware/uploadMiddleware");
+const { upload, handleUpload } = require("../middleware/uploadMiddleware");
 const { login, logout } = require("../controllers/adminController");
 const adminController = require("../controllers/adminController");
 const { uploadErrorHandler } = require("../middleware/errorMiddleware");
@@ -65,8 +65,8 @@ router.get("/items/merch/new", protect, (req, res) => {
 });
 
 // Create item with S3 upload
-router.post("/items", protect, upload.single("image"), createItem);
-router.post("/merch", protect, upload.single("image"), createMerch);
+router.post("/items", protect, handleUpload, createItem);
+router.post("/merch", protect, handleUpload, createMerch);
 router.post("/items/category", protect, createItemCategory);
 
 // Get item for editing
@@ -86,7 +86,7 @@ router.get("/items/:id/edit/:category", protect, async (req, res) => {
 });
 
 // Update item with S3 upload
-router.put("/items/:id", protect, upload.single("image"), updateItem);
+router.put("/items/:id", protect, handleUpload, updateItem);
 
 // Delete item and its S3 image
 router.delete("/items/:id", protect, deleteItem);

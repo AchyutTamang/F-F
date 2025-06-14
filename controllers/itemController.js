@@ -76,7 +76,7 @@ exports.createItem = async (req, res) => {
     const { name, description, price, category } = req.body;
 
     // Input validation
-    if (!name || !description || !price || !category) {
+    if (!name || !price || !category) {
       // req.flash("error", "All fields are required");
       return res.redirect("/admin/items/new");
     }
@@ -114,7 +114,7 @@ exports.createMerch = async (req, res) => {
     const { name, description, price, category } = req.body;
 
     // Input validation
-    if (!name || !description || !price || !category) {
+    if (!name || !price || !category) {
       // req.flash("error", "All fields are required");
       return res.redirect("/admin/merch/new");
     }
@@ -151,7 +151,7 @@ exports.createItemCategory = async (req, res) => {
   try {
     const { name, description } = req.body;
     // Input validation
-    if (!name || !description) {
+    if (!name) {
       return res.redirect("/admin/items/category/new");
     }
 
@@ -203,7 +203,13 @@ exports.updateItem = async (req, res) => {
       }
     }
 
-    await MenuItem.findByIdAndUpdate(req.params.id, updateData);
+    console.log("itm cate: ", category, name);
+
+    if (category == "merch") {
+      await Merch.findByIdAndUpdate(req.params.id, updateData);
+    } else {
+      await MenuItem.findByIdAndUpdate(req.params.id, updateData);
+    }
     res.redirect("/admin/dashboard");
   } catch (error) {
     console.error("Error updating item:", error);

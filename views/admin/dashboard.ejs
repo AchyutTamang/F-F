@@ -129,7 +129,12 @@
           <!-- Filter Section -->
           <div class="mb-6 p-4 bg-gray-50 rounded-lg">
             <form id="filterForm" class="space-y-4">
+              <% if(items[0].category == "merch"){ %>
+                <div class="grid grid-cols-1 md:grid-cols-1 gap-4" >
+
+              <% }else{ %>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4" >
+                <% } %>
                 <!-- Search Filter -->
                 <div >
                   <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Search</label>
@@ -137,11 +142,13 @@
                     type="text"
                     id="search"
                     name="search"
-                    placeholder="Search items..."
+                    placeholder="Search items by name..."
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary"
                   >
                 </div>
-                
+                <% if(items[0].category == "merch"){ %>
+
+                <% }else{ %>
                 <!-- Category Filter -->
                 <div>
                   <label for="category" class="block text-sm font-medium text-gray-700 mb-1">Category</label>
@@ -154,6 +161,7 @@
                   </select>
                 </div>
                 
+                <% } %>
                 
               </div>
               
