@@ -6,7 +6,10 @@ exports.protect = async (req, res, next) => {
     const token = req.cookies.jwt;
 
     if (!token) {
-      return res.redirect("/admin/login");
+      return res.redirect("/admin/login", {
+        isAdmin: false,
+        title: "Admin Login",
+      });
     }
 
     if (!process.env.JWT_SECRET) {
@@ -26,6 +29,10 @@ exports.protect = async (req, res, next) => {
   } catch (error) {
     console.error("Auth error:", error);
     res.cookie("jwt", "", { maxAge: 1 });
-    res.redirect("/admin/login");
+    res.redirect("/admin/login"),
+      {
+        isAdmin: false,
+        title: "Admin Login",
+      };
   }
 };

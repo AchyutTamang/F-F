@@ -203,8 +203,6 @@ exports.updateItem = async (req, res) => {
       }
     }
 
-    console.log("itm cate: ", category, name);
-
     if (category == "merch") {
       await Merch.findByIdAndUpdate(req.params.id, updateData);
     } else {

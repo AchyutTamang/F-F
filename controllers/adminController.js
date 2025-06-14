@@ -129,7 +129,6 @@ exports.getDashboard = async (req, res) => {
     const totalItems = await MenuItem.countDocuments();
     const totalCategories = await Category.countDocuments();
     const totalProducts = await Merch.countDocuments();
-    console.log("filtered: ", req.query.category, req.query.search);
 
     if (req.query.category || req.query.search) {
       let query = {};
@@ -145,7 +144,6 @@ exports.getDashboard = async (req, res) => {
         .sort({ orderCount: -1 })
         .limit(5);
       // const items = await itemController.getItems();
-      console.log("admin filter item: ", items);
 
       res.render("admin/dashboard", {
         title: "Admin Dashboard",
