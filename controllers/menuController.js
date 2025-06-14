@@ -23,8 +23,6 @@ exports.getFilteredItems = async (req, res) => {
       if (maxPrice) query.price.$lte = parseFloat(maxPrice);
     }
 
-    query.isAvailable = true; // Ensure only available items are fetched
-
     const items = await MenuItem.find(query);
 
     if (req.xhr) {
