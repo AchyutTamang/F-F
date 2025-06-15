@@ -6,7 +6,7 @@ exports.protect = async (req, res, next) => {
     const token = req.cookies.jwt;
 
     if (!token) {
-      return res.redirect("/admin/login", {
+      return res.render("admin/login", {
         isAdmin: false,
         title: "Admin Login",
       });
@@ -21,7 +21,7 @@ exports.protect = async (req, res, next) => {
     const admin = await Admin.findById(decoded.id);
     if (!admin) {
       res.cookie("jwt", "", { maxAge: 1 });
-      return res.redirect("/admin/login");
+      return res.redirect(302, "/admin/login");
     }
 
     req.admin = admin;
@@ -29,7 +29,7 @@ exports.protect = async (req, res, next) => {
   } catch (error) {
     console.error("Auth error:", error);
     res.cookie("jwt", "", { maxAge: 1 });
-    res.redirect("/admin/login"),
+    res.render("/admin/login"),
       {
         isAdmin: false,
         title: "Admin Login",

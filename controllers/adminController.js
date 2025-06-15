@@ -62,7 +62,7 @@ exports.logout = (req, res) => {
     httpOnly: true,
     expires: new Date(0),
   });
-  res.redirect("/admin/login", { isAdmin: false, title: "Admin Login" });
+  return res.render("admin/login", { isAdmin: false, title: "Admin Login" });
 };
 
 // Add these functions to adminController.js
